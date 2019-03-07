@@ -1,0 +1,19 @@
+# Misc edition
+*~
+*.bak
+
+# Binaries and libraries
+*.o
+*.a
+*.exe
+*.png
+*.pdf
+
+
+# Configuration files
+*/.cproject
+*/.project
+*/.settings/
+*.launch
+
+./test
