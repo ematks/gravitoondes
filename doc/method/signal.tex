@@ -65,7 +65,7 @@ Using the inverse Fourier transform, the cross-correlation theorem, the Fourier 
 In Eq.~\ref{eq:qtransform2}, the signal is applied a Fourier transform, a shift in frequency, a multiplication by the frequency-domain window and an inverse Fourier transform.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{The window} \label{sec:window}
+\section{The window} \label{sec:window}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 To compute the $Q$ transform of Eq.~\ref{eq:qtransform2}, we need to apply a Fourier transform to the Gaussian window of Eq.~\ref{eq:gausswindowt}. In the frequency domain, the window is also Gaussian and real:
 \begin{equation}
@@ -122,7 +122,60 @@ For both the Gaussian and bisquare windows, we naturally find indentical values:
 In the following, we will often refer to a basis of complex-valued sinusoidal Gaussian waveforms keeping in mind that bisquare windows are actually used.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{The noise whitening} \label{sec:whitening}
+\section{The tiles} \label{sec:tiles}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+The tiles must be chosen to cover a finite region of parameter space, $[\tau_{min};\tau_{max}]\times [\phi_{min};\phi_{max}] \times [Q_{min};Q_{max}]$. The density of tiles must be large to guarantee a high detection efficiency. However, the number of tiles must also be as small as possible to provide a fast processing. To meet these two competitive requirements, the parameter space is tiled such that the fractional energy loss due to mismatch is below a pre-defined value, $\mu_{max}$. For complex-valued sinusoidal Gaussian waveforms, the mismatch can be analytically computed and the optimal number of tiles can be determined. The tiles are distributed over a cubic lattice using a mismatch metric~\footnote{The metric includes a non-diagonal $\delta \phi \delta Q$ term which has been neglected.} to measure distances:
+\begin{equation}
+  \delta s^2 =
+  \frac{4\pi^2\phi^2}{Q^2}\delta \tau^2
+  + \frac{2+Q^2}{4\phi^2}\delta \phi^2
+  + \frac{1}{2Q^2}\delta Q^2.
+  \label{eq:tilemetric}
+\end{equation}
+To guarantee a fractional energy loss smaller than $\mu_{max}$, the minimum number of tiles, $N_\tau \times N_\phi \times N_Q$, is given by the mismatch distances integrated over the three dimensions:
+\begin{align}
+  N_\tau \ge \frac{s_\tau}{2\sqrt{\mu_{max}/3}},  & \qquad s_\tau = \frac{2\pi\phi}{Q}(\tau_{max} - \tau_{min}), \label{eq:tiledistancetau} \\
+  N_\phi \ge \frac{s_\phi}{2\sqrt{\mu_{max}/3}},  & \qquad s_\phi = \frac{\sqrt{2+Q^2}}{2}\ln(\phi_{max}/\phi_{min}), \label{eq:tiledistancephi} \\
+  N_Q \ge \frac{s_Q}{2\sqrt{\mu_{max}/3}},  & \qquad s_Q = \frac{1}{\sqrt{2}}\ln(Q_{max}/Q_{min}). \label{eq:tiledistanceq}
+\end{align}
+This tiling structure can be depicted as a set of $N_Q$ logarithmically-spaced $Q$ planes, indexed by $q$:
+\begin{equation}
+  Q_q = Q_{min}\left[ \frac{Q_{max}}{Q_{min}}\right]^{(0.5+q)/N_q}, \qquad 0\le q < N_Q.
+  \label{eq:q}
+\end{equation}
+Each of these planes is divided into $N_\phi(Q_q)$ logarithmically-spaced frequency rows, indexed by $q$ and $l$:
+\begin{equation}
+  \phi_{ql} = \phi_{min}\left[ \frac{\phi_{max}}{\phi_{min}}\right]^{(0.5+l)/N_\phi(Q_q)}, \qquad 0\le l < N_\phi(Q_q).
+  \label{eq:phi}
+\end{equation}
+Each frequency row is finally sub-divided into $N_\tau(Q_q,\phi_{ql})$ linearly-spaced time bins, indexed by $q$, $l$ and $m$:
+\begin{equation}
+  \tau_{qlm} = \tau_{min}+(m+0.5)\frac{\tau_{max}-\tau_{min}}{N_\tau(Q_q,\phi_{ql})}, \qquad 0\le m < N_\tau(Q_q,\phi_{ql}).
+  \label{eq:tau}
+\end{equation}
+
+The targeted parameter space must be specified: the $Q$ range, $[Q_{min}; Q_{max}]$, the frequency range, $[\phi_{min}; \phi_{max}]$ and a time range. The time range is fixed to the characteristic chunk duration, $T_c$, and is centered on 0: $[-T_c/2; +T_c/2]$. If necessary, the $Q_{min}$ and $\phi_{max}$ parameters are automatically adjusted so that they verify the anti-aliasing conditions of Eq.~\ref{eq:antialias1} and Eq.~\ref{eq:antialias2}. In addition, it is required to work with an integrated mismatch distance along the time dimension $s_\tau\ge4$, which translates into a minimum permissible frequency, $\phi_{min} \ge 2Q/(\pi T_c)$.
+
+A $Q$ plane object is implemented as a C++ class inheriting from the 2-D histogram class of ROOT (\texttt{TH2D}). The number of $Q$ planes, $N_Q$, is equal to the next integer verifying condition of Eq.~\ref{eq:tiledistanceq}. The $Q$ planes, indexed by $q$, are given a $Q$ value obtained from Eq.~\ref{eq:q}.
+
+A $Q$ plane histogram is then vertically binned into logarithmically-spaced frequency rows. The number of frequency rows, $N_\phi(Q_q)$, is equal to the next integer verifying condition of Eq.~\ref{eq:tiledistancephi}. For each frequency row $(q,l)$, the horizontal time axis is divided into $N_\tau(Q_q,\phi_{ql})$ linear bins, $N_\tau(Q_q,\phi_{ql})$ being the next power of two verifying the condition of Eq.~\ref{eq:tiledistancetau}. Indeed, in Sec.~\ref{sec:discrete}, we explain that working with power-of-two vector sizes is computationally more efficient when performing Fourier transforms. The tile time and frequency, $(\tau_{qlm}, \phi_{ql})$, is given by the histogram bin center obtained from~Eq.\ref{eq:tau} and Eq.~\ref{eq:phi}. It is also useful to give the histogram bin width in both the time and frequency dimensions:
+\begin{align}
+  \Delta\tau_{ql} &= T_c / N_\tau(Q_q, \phi_{ql}), \label{eq:dtau} \\
+  \Delta\phi_{ql} &= 4\phi_{ql}\sqrt{\frac{\mu_{max}}{3(2+Q_q^2)}}.\label{eq:dphi}
+\end{align}
+
+A realistic example of a tiling structure is represented in Fig.~\ref{fig:tiling}.
+\begin{figure}
+  \center
+  \epsfig{width=7.5cm, file=./q0.eps} \epsfig{width=7.5cm, file=./q1.eps} \\
+  \epsfig{width=7.5cm, file=./q2.eps} \epsfig{width=7.5cm, file=./q3.eps} \\
+  \epsfig{width=7.5cm, file=./q4.eps}
+  \caption{Example of a realistic tiling structure. When requiring a maximal energy loss of $\mu_{max}=20\%$, 5 $Q$ planes are needed to cover the $Q$ range $[\sqrt{11}; 100]$. Each $Q$ plane is then tiled (black and green rectangles) along frequency rows delimited by the red dashed lines. To distinguish the tiles, the time chunk is zoomed in $\pm 100$~ms.}
+  \label{fig:tiling}
+\end{figure}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{The noise whitening} \label{sec:whitening}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 Whitening the noise before applying the $Q$ transform is useful for a subsequent statistical interpretation of the $Q$ transform coefficients. To achieve this, a simple method consists of re-weighting the frequency-domain data by the inverse noise amplitude spectral density:
 \begin{equation}
@@ -139,7 +192,7 @@ The noise one-sided PSD is usually estimated by averaging multiple one-sided per
 In a one-sided convention, the factor 2 accounts for the negative frequencies of $\tilde{x}_T$. Note that this factor is corrected back when whitening the data in Eq.~\ref{eq:whitening}.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{The signal-to-noise ratio} \label{sec:snr}
+\section{The signal-to-noise ratio} \label{sec:snr}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 Let's consider a burst of energy, the waveform of which is $b(t)$. It lies on top of noise, $n(t)$, such as $x(t) = b(t) + n(t)$. An amplitude $Q$ transform signal-to-noise ratio (SNR) for each tile is defined as
 \begin{equation}
