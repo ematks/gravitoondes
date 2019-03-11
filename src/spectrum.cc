@@ -47,7 +47,7 @@ int main (int argc, char* argv[]){
   
   // input data
   fftw_complex *in = (fftw_complex*) fftw_malloc(sizeof(fftw_complex) * N);
-  for(int p=0; p<N/2; p++){
+  for(int p=0; p<N; p++){
     in[p][0] = mytimeseries->GetY()[p];// real part
     in[p][1] = 0.0;// imaginary part
   }
@@ -63,10 +63,10 @@ int main (int argc, char* argv[]){
 
   // TGraph for spectrum
   TGraph *myspectrum = new TGraph(N/2);
-
+ 
   // fill spectrum
   for(int p=0; p<N/2; p++)
-    myspectrum->SetPoint(p, (double)p*(double)fs/(double)N, sqrt(out[p][0]*out[p][0]+out[p][1]*out[p][1]));
+    myspectrum->SetPoint(p, (double)p*(double)fs/(double)N, 2*sqrt(out[p][0]*out[p][0]+out[p][1]*out[p][1]));
   
   // plot and save spectrum
   mycanvas->cd();
