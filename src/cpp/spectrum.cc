@@ -10,7 +10,7 @@ using namespace std;
 int main (int argc, char* argv[]){
 
   // load root file
-  TFile *myfile = new TFile("../data/GW150914/h1.data.03.root","read");
+  TFile *myfile = new TFile("../../data/GW150914/h1.data.03.root","read");
 
   // get TGraph data
   TGraph *mytimeseries = (TGraph*)myfile->Get("data");
