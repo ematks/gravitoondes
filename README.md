@@ -35,7 +35,4 @@ This project is divided into two parts:
 - project the data onto each time-frequency tile and compute the SNR
 - plot the final result
 
-## Project 2: GW150914 detection
-
-To be completed
 
