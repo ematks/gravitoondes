@@ -1,5 +1,5 @@
 CXX          = g++ -Wno-deprecated -Wall -fPIC
-CXXFLAGS     = $(shell $(ROOTSYS)/bin/root-config --cflags) -I../src/
+CXXFLAGS     = $(shell $(ROOTSYS)/bin/root-config --cflags) -I../src/cpp/
 LDFLAGS	     = -shared
 ROOT_LIBS    = $(shell $(ROOTSYS)/bin/root-config --glibs)
 FFTW_LIBS    = -L/usr/lib/x86_64-linux-gnu -lfftw3
@@ -15,7 +15,7 @@ TILER_OBJS     = tiler.o
 
 all: $(TARGET) $(SPECTRUM_EXE) $(TILER_EXE)
 
-%.o : ../src/%.cc
+%.o : ../src/cpp/%.cc
 	$(CXX) -c $< $(CXXFLAGS)
 
 $(TARGET) : $(OBJECTS)
