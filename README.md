@@ -1,7 +1,8 @@
 # GravitationalWaves
 
 ## Contributors
-[Florent Robinet](mailto:robinet@lal.in2p3.fr)
+[Florent Robinet](mailto:florent-robinet@ijclab.in2p3.fr)
+[Jean-Gregoire Ducoin](mailto:ducoin@lal.in2p3.fr)
 
 ## Scope of the project
 
@@ -37,5 +38,16 @@ This project is divided into two parts:
 - develop a function to compute the bisquare window for each tile
 - project the data onto each time-frequency tile and compute the SNR
 - plot the final result
+
+### Chapter 1: the data and the Fourier transform
+
+- Run the `spectrum` code and get familiar with the output plots. Compare the spectrum with the LIGO sensitivity plot in the [GW150914 discovery paper](https://journals.aps.org/prl/abstract/10.1103/PhysRevLett.116.061102). What's wrong?
+- Use a Hann window to correct for the spectral leakage.
+- Normalize your spectrum to recover the LIGO sensitivity plot in the [GW150914 discovery paper](https://journals.aps.org/prl/abstract/10.1103/PhysRevLett.116.061102).
+- Play with the code parameters: length of the Fourier transform...
+- Plot the spectrum including the negative frequencies
+- Perform a BACKWARD Fourier transform.
+
+### Chapter 2: the noise power spectral density (PSD)
 
 
