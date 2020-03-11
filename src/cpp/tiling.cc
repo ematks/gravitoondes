@@ -106,11 +106,7 @@ void Tiling::SetTileContent(const int aFrequencyIndex,
 			    const int aTimeIndex,
 			    const double aContent){
   
-  int binstart=(aTimeIndex*bandMultiple[aFrequencyIndex])+1;
-  int binstop=binstart+bandMultiple[aFrequencyIndex];
-  //cout<<aFrequencyIndex<<" "<<aTimeIndex<<" "<<aContent<<" "<<binstart<<" "<<binstop<<endl;
-  for(int b=binstart; b<binstop; b++)
-    tile_map->SetBinContent(b,aFrequencyIndex+1,aContent);
+  // To be completed
   
   return;
 }

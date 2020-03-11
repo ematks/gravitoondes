@@ -17,6 +17,7 @@ This project is divided into two parts:
 - [Method note](./doc/method/signal.pdf): the signal analysis is presented in a short note.
 - [ROOT](https://root.cern/) libraries are used as a tool box to perform analyses. See also the [C++ class documentation](https://root.cern.ch/doc/master/index.html)
 - Fourier transforms are performed with [FFTW](http://www.fftw.org/). See also the [documentation](http://www.fftw.org/fftw3_doc/).
+- [qsort algorithm](http://www.cplusplus.com/reference/cstdlib/qsort/)
 
 ## Data sets
 
@@ -28,6 +29,8 @@ This project is divided into two parts:
 
 - use the LIGO time series data in `./data/GW150914/?1.data.root`
 - play with FFTW to Fourier-transform the time series
+  - plot the full array of coefficients after the Fourier transform.
+  - plot the entire data set in a single graph and compute the spectrum.
 - compute the power spectrum density (PSD) using a robust estimator
 - whiten the time series
 - tile the time-frequency plane
@@ -35,7 +38,4 @@ This project is divided into two parts:
 - project the data onto each time-frequency tile and compute the SNR
 - plot the final result
 
-## Project 2: GW150914 detection
-
-To be completed
 
