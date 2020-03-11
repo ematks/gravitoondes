@@ -45,9 +45,16 @@ This project is divided into two parts:
 - Use a Hann window to correct for the spectral leakage.
 - Normalize your spectrum to recover the LIGO sensitivity plot in the [GW150914 discovery paper](https://journals.aps.org/prl/abstract/10.1103/PhysRevLett.116.061102).
 - Play with the code parameters: length of the Fourier transform...
-- Plot the spectrum including the negative frequencies
-- Perform a BACKWARD Fourier transform.
+- Plot the spectrum including the negative frequencies.
+- Perform a BACKWARD Fourier transform and check that the original signal is recovered.
 
 ### Chapter 2: the noise power spectral density (PSD)
+
+- Prepare your code to compute a spectrum over 2 seconds of data.
+- Loop over the data to compute a spectrum over a segment of 2 seconds overlapping the previous segment by 1 second.
+- Check for the Welch method to estimate a power spectral density (PSD). How can you modify this method to have a PSD estimator which is unbiased by outliers.
+- Finally, average 2 PSD estimates, each of them estimated on non-overlapping segments.
+- Plot the final PSD on top of all the 4-seconds estimates.
+- Save your final PSD in a file (for both detectors!)
 
 
