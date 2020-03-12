@@ -75,11 +75,21 @@ Start a new code from scratch to perform the following analysis steps:
 - Fourier-transform the data back in the time domain. Can you "see" GW150914?
 
 ### Chapter 4: tiling the parameter space
+
 Before applying the Q transform, the time-frequency plane needs to be tiled.
 For this, we will refer to the [Method note](./doc/method/signal.pdf).
-- Develop a class to descibre a multi-resolution tiling.
+- Develop a class to descibre a multi-resolution tiling:
+  - the resolution is defined by a given Q value and a mismatch between the tiles (constructor)
+  - use a simple grid: logarithmically-spaced frequency rows, and linearly-distributed time bins.
+  - map the tiles onto the grid
+  - develop the functions to access/fill the tiles
 
 ### Chapter 5: the Q transform
 
-
+- Prepare the bisquare window for each frequency row.
+- Prepare the normalization factor for each frequency row.
+- Fill the input vector
+- Perform the inverse Fourier transform for each row.
+- Fill your tiling structure,
+- save your final spectrogram.
 
