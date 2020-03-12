@@ -1,7 +1,8 @@
 # GravitationalWaves
 
 ## Contributors
-[Florent Robinet](mailto:robinet@lal.in2p3.fr)
+[Florent Robinet](mailto:florent-robinet@ijclab.in2p3.fr)
+[Jean-Gregoire Ducoin](mailto:ducoin@lal.in2p3.fr)
 
 ## Scope of the project
 
@@ -37,5 +38,48 @@ This project is divided into two parts:
 - develop a function to compute the bisquare window for each tile
 - project the data onto each time-frequency tile and compute the SNR
 - plot the final result
+
+### Chapter 1: the data and the Fourier transform
+
+- Run the `spectrum` code and get familiar with the output plots.
+Compare the spectrum with the LIGO sensitivity plot in the
+[GW150914 discovery paper](https://journals.aps.org/prl/abstract/10.1103/PhysRevLett.116.061102).
+What's wrong?
+- Use a Hann window to correct for the spectral leakage.
+- Normalize your spectrum to recover the LIGO sensitivity plot in the
+[GW150914 discovery paper](https://journals.aps.org/prl/abstract/10.1103/PhysRevLett.116.061102).
+- Play with the code parameters: length of the Fourier transform...
+- Plot the spectrum including the negative frequencies.
+- Perform a BACKWARD Fourier transform and check that the original signal is recovered.
+
+### Chapter 2: the noise power spectral density (PSD)
+
+- Prepare your code to compute a spectrum over 2 seconds of data.
+- Loop over the data to compute a spectrum over a segment of 2 seconds overlapping the previous segment by 1 second.
+- Check for the Welch method to estimate a power spectral density (PSD).
+How can you modify this method to have a PSD estimator which is unbiased by outliers.
+- Finally, average 2 PSD estimates, each of them estimated on non-overlapping segments.
+- Plot the final PSD on top of all the 4-seconds estimates.
+- Save your final PSD in a file (for both detectors!)
+
+### Chapter 3: the data whitening
+
+Now, let's start the data analysis and search for gravitational-wave events.
+Start a new code from scratch to perform the following analysis steps:
+- Loop over the data using 4-seconds long segments, overlapping by 1 second.
+- Apply a Tukey window to transition from 0 to 1 in 1 second.
+- Fourier-transform the data
+- Remove frequencies below 20 Hz.
+- Whiten the data with the PSD, using the PSD you saved in the previous chapter.
+- Plot the whiten data in the frequency domain (spectrum). Is it what you expect?
+- Fourier-transform the data back in the time domain. Can you "see" GW150914?
+
+### Chapter 4: tiling the parameter space
+Before applying the Q transform, the time-frequency plane needs to be tiled.
+For this, we will refer to the [Method note](./doc/method/signal.pdf).
+- Develop a class to descibre a multi-resolution tiling.
+
+### Chapter 5: the Q transform
+
 
 
