@@ -33,7 +33,6 @@ class spectrogram:
         self.n = 
         
         
-        self.freq = (self.fs/2) * np.linspace(0,1,self.n/2)
         self.freq_range = [20,self.freq[-1]]
 
 
