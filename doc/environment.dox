@@ -1,0 +1,121 @@
+/*! @page environment Environment
+*
+* @tableofcontents
+*
+* @section environment_conda Conda environment 
+*
+* For this project, it is assumed that the [Anaconda](https://www.anaconda.com/) environment is installed on your machine.
+* You can also refer to the [NPAC computing course](https://ens.lal.in2p3.fr/NPAC/env_initialisation.html#execution-environment) to install and setup a proper environment.
+*
+* Create a new environment to install the software needed for this project:
+* ```
+conda create -c conda-forge --name npac_project root python=3.8
+* ```
+* Activate this environment to develop your project:
+* ```
+conda activate npac_project
+* ```
+* To deactivate this environment, use:
+* ```
+conda deactivate
+* ```
+*
+* @section environment_git Git / GitLab
+*
+* Your computer project will be managed using git.
+*
+* @subsection environment_git_repo Git repository
+*
+* The original project should be cloned to your local computer:
+* ```
+git clone https://gitlab.in2p3.fr/npac/gravitational-waves.git
+* ```
+* This repository must be redefined as the `upstream` project:
+* ```
+cd gravitational-waves/
+git remote rename origin upstream
+* ```
+* Go to [gitlab](https://gitlab.lal.in2p3.fr) and create a new project named `gravitational-waves`.
+* @note PLEASE, invite Florent Robinet as a member of your project: go to "members" and add Florent Robinet as a "developer"
+*
+* Add the `origin` remote to your local repository:
+* ```
+git remote add origin git@gitlab.lal.in2p3.fr:robinet/gravitational-waves.git
+* ```
+* @note Change `robinet` by your username.
+* @note This command assumes that a ssh key is in place.
+*
+* Now you should see 2 remote repositories:
+* ```
+git remote -v
+origin	git@gitlab.lal.in2p3.fr:robinet/gravitational-waves.git (fetch)
+origin	git@gitlab.lal.in2p3.fr:robinet/gravitational-waves.git (push)
+upstream	https://gitlab.in2p3.fr/npac/gravitational-waves.git (fetch)
+upstream	https://gitlab.in2p3.fr/npac/gravitational-waves.git (push)
+* ```
+* Your local branch must be associated to your origin:
+* ```
+git push --set-upstream origin master
+* ```
+* Finally push the changes to your remote repo using:
+* ```
+git push origin master
+* ```
+* Now, your project is in place in gitlab. You can check it at https://gitlab.lal.in2p3.fr/robinet/gravitational-waves.
+* @warning For this project, 2 students will share the same remote repository.
+* Therefore the creation of the remote gitlab project should only be done once, by one of the student.
+* The second student should be added to the project as a "developer" and simply clone the origin:
+* ```
+git clone git@gitlab.lal.in2p3.fr:robinet/gravitational-waves.git
+* ```
+*
+* @subsection environment_git_worflow Git workflow
+*
+* @subsubsection environment_git_worflow_commit Commit your changes
+*
+* When you develop your code, you should frequently commit and push your changes to your remote repository (`origin`):
+* ```
+# commit your changes to your local repository:
+git commit -a
+
+# push your changes to your origin repository:
+git push origin
+* ```
+* Your remote repository will be used to control and evaluate your work.
+* 
+* @subsubsection environment_git_worflow_pull Synchronize your work with your partner
+*
+* The project will be developed by 2 persons.
+* When the first person pushes some changes, the second person must update its local repository: 
+* ```
+git pull
+* ```
+* When doing this, there can be conflicts if a file was edited by both developers.
+* You will have to fix the conflicts and commit your changes.
+* 
+* @subsubsection environment_git_worflow_add Add new files
+*
+* If you want to add a new file to your repository:
+* ```
+git add [new file]
+git commit [new file]
+* ```
+*
+* @subsubsection environment_git_worflow_upstream Synchronize with upstream
+*
+* When the original repository is updated (by F. Robinet), you may want to update your repository to synchronize the changes:
+* ```
+git fetch upstream
+git merge upstream/master origin/master
+git push origin
+* ```
+*
+* @section environment_doc Documentation
+*
+* When you push your changes to the remote repository, a documentation is automatically built.
+* Public web pages are posted online:
+*
+* [Doxygen](https://www.doxygen.nl/index.html) is used to generate the documentation.
+* Your code should be properly documented.
+* Refer to the existing code to see how it works. 
+*/
