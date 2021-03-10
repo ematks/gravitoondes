@@ -1,3 +1,7 @@
+/**
+ * @file
+ * @brief This program plots the data time series and the data spectrum.
+ */
 #include <iostream>
 #include <fftw3.h>
 #include <TFile.h>

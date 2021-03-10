@@ -1,0 +1,71 @@
+/*!
+* @page fft Fourier transforms
+*
+* @tableofcontents
+*
+* @section fft_definition Definition
+*
+* The Fourier transform of a timeseries \f$x(t)\f$ is defined as:
+* \f[
+\tilde{x}(f) = \int_{-\infty}^{+\infty}x(t)e^{-i\pi ft}dt.
+* \f]
+* The inverse Fourier transform then writes:
+* \f[
+x(t) = \int_{-\infty}^{+\infty}\tilde{x}(f)e^{i\pi ft}df.
+* \f]
+* When working with discrete data, a discrete Fourier transform must be performed.
+* The data consists of a discrete time series, \f$x[j]\f$, sampled at a frequency \f$f_{s}\f$ which defines the time separation between two consecutive data points \f$\delta t = t_{j+1}-t_j = 1/f_{s}\f$.
+* The forward and inverse Fourier transforms are discretized as 
+* \f[
+\tilde{x}[k]=\frac{1}{f_s}\sum_{j=0}^{N-1}{x[j]\mathrm{e}^{-2i\pi jk/N}}
+* \f]
+and
+* \f[
+x[j]=\frac{f_s}{N}\sum_{k=0}^{N-1}{\tilde{x}[k]\mathrm{e}^{+2i\pi jk/N}}.
+* \f]
+* The frequency-domain data vector, \f$\tilde{x}\f$, is of size \f$N\f$ and the frequency sample interval is \f$\delta f = f_{k+1}-f_k = f_s/N = 1/T\f$.
+* By convention, the first element, \f$\tilde{x}[0]\f$ is the DC component which is a purely real number.
+* Positive frequencies are stored in the first half of \f$\tilde{x}\f$: \f$f_k=kf_s/N\f$, with \f$1\le k \le N/2\f$.
+* The element \f$\tilde{x}[N/2]\f$ is purely real and is associated to the Nyquist frequency \f$f_{\text{Nyquist}}=f_s/2\f$.
+* Negative frequencies are stored backward in the second half of \f$\tilde{x}\f$: \f$f_k=(k-N)f_s/N\f$, with \f$N/2 < k < N\f$.
+*
+* Discrete Fourier transforms are performed with the [FFTW](http://www.fftw.org/fftw3_doc/) algorithm ([For python](https://numpy.org/doc/stable/reference/routines.fft.html)).
+* They can be computationally expensive and care must be taken to optimize the use of FFTW routines.
+* A first approach is to only work with vector sizes which are a power of two.
+* With such a configuration, the FFTW routines provide optimal performance.
+* Another possibility of optimization is to take advantage from the fact that, most often, we work with purely real data vectors.
+* For instance, the detector signal \f$x[j]\f$ is a purely real time series.
+* The Fourier transform \f$x\rightarrow\tilde{x}\f$ is a real-to-complex transform.
+* As a result, the spectrum, \f$\tilde{x}[k]\f$, is symmetrical around DC.
+* The negative frequencies are ignored and only one-sided data vectors are considered: \f$\tilde{x}\f$ is of size \f$N_c/2+1\f$.
+* This redundancy is exploited by the FFTW algorithm to reduce the computing cost, both memory and speed.
+*
+* @section fft_exercices Exercises
+*
+* - Make a drawing to summarize the Fourier transform defined above:
+*   - represent the data vector in the time domain and in the frequency domain
+*   - use the index \f$j\f$ in the time domain and \f$k\f$ in the frequency domain
+*   - mark the special index \f$k=N/2\f$
+*   - associate the time (resp. the frequency) to each index \f$j\f$ (resp. \f$k\f$).
+* - KEEP THIS DRAWING AS A REFERENCE!!!
+* - Write a program to Fourier-transfom a discrete time series and plot the resulting spectrum. The power spectrum is defined as \f${\cal{P}}(f) = |x(f)|^2\f$ and the amplitude spectrum is defined as \f${\cal{A}}(f) = \sqrt{|x(f)|^2}\f$. As a starting point, you can use `basic.cc`. Use the following functions:
+*   - \f$x(t) = A\f$ (constant function)
+*   - \f$x(t) = A\sin(2\pi f_0t)\f$, with \f$f_0=200\f$ Hz
+*   - \f$x(t) = Ae^{-\frac{(t-t_0)^2}{2\sigma^2}}\f$, with \f$t_0=2\f$ s is the center of your time segment, and \f$\sigma=0.1\f$ s.
+* - Draw the resulting spectra. Pay attention to the x axis and compute the right frequencies!
+* - Study the impact of the different parameters: the number of points, the sampling frequency,...
+* - Have a separate look at the real and imaginary parts of \f$\tilde{x}(f)\f$. What can you say for purely real time series?
+* - Use inverse Fourier transforms. Can you recover the original signal? What about the normalization?
+*
+* @section fft_spectrum Spectrum of real data
+*
+* - Run the `spectrum.cc` code and get familiar with the output plots.
+* - Compare the spectrum with the LIGO sensitivity plot in the [GW150914 discovery paper](https://journals.aps.org/prl/abstract/10.1103/PhysRevLett.116.061102).
+* What's wrong?
+* - Use a Hann window to correct for the spectral leakage.
+* - Normalize your spectrum to recover the LIGO sensitivity plot in the [GW150914 discovery paper](https://journals.aps.org/prl/abstract/10.1103/PhysRevLett.116.061102).
+* - Play with the code parameters: length of the Fourier transform...
+* - Plot the spectrum including the negative frequencies.
+* - Perform a BACKWARD Fourier transform and check that the original signal is recovered.
+*
+*/
