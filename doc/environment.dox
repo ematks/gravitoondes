@@ -9,7 +9,7 @@
 *
 * Create a new environment to install the software needed for this project:
 * ```
-conda create -c conda-forge --name npac_project root python=3.8
+conda create -c conda-forge --name npac_project root python=3.8 matplotlib
 * ```
 * Activate this environment to develop your project:
 * ```

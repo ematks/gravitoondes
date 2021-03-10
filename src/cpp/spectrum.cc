@@ -1,12 +1,18 @@
 #include <iostream>
 #include <fftw3.h>
-#include "TFile.h"
-#include "TCanvas.h"
-#include "TGraph.h"
-#include "TH1.h"
+#include <TFile.h>
+#include <TCanvas.h>
+#include <TGraph.h>
+#include <TH1.h>
 
 using namespace std;
 
+/**
+ * @brief This program plots the data time series and the data spectrum.
+ * @details The input timeseries "h1.data.03.root" is opened as a TGraph.
+ * It is Fourier-transformed with fftw routines.
+ * The data vector in the Fourier domain is plotted.
+ */
 int main (int argc, char* argv[]){
 
   // load root file

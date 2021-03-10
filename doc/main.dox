@@ -9,20 +9,20 @@
 *
 * @section main_scope Scope of the project
 *
-* This project is about transforming the data collected by gravitational-wave detectors, such as the LIGO and Virgo detectors.
+* This project is about transforming the data collected by gravitational-wave detectors, such as the LIGO and Virgo detectors, and to visualize a gravitational-wave event.
 * We will use the data set associated to the first detection of a gravitational-wave event in LIGO detectors: GW150914.
 * This event originated from the merger of a binary black hole system.
 *
 * This project is about developing a code to process the LIGO strain time series.
 * This idea is to implement some basic technics in signal processing such as noise estimation, noise whitening, and short Fourier transforms.
 * The final result will be to plot the spectrogram of GW150914 to visualize the gravitational-wave signal.
-* ![H1-GW150914-spectrogram](./doc/images/H1-GW150914-spectrogram.png "GW150914 spectrogram in LIGO-Hanford data.")
+* ![H1-GW150914-spectrogram](H1-GW150914-spectrogram.png "GW150914 spectrogram in LIGO-Hanford data.")
 
 *
 * @section main_documentation Documentation
 *
 * - [GW150914 discovery paper](https://journals.aps.org/prl/abstract/10.1103/PhysRevLett.116.061102)
-* - [Method note](./doc/method/signal.pdf): the signal analysis is presented in a short note.
+* - [Method note](https://gitlab.in2p3.fr/npac/gravitational-waves/-/blob/master/doc/method/signal.pdf): the signal analysis is presented in a short note.
 * - [ROOT](https://root.cern/) libraries are used as a tool box to perform analyses. See also the [C++ class documentation](https://root.cern.ch/doc/master/index.html)
 * - Fourier transforms are performed with [FFTW](http://www.fftw.org/). See also the [documentation](http://www.fftw.org/fftw3_doc/) and the [pyhton counterpart](https://numpy.org/doc/stable/reference/routines.fft.html).
 * - [qsort algorithm](http://www.cplusplus.com/reference/cstdlib/qsort/)

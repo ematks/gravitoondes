@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 
 def nextPowerOf2(n): 
     """
-    This function return the closest power of 2 bigger than n
+    This function returns the closest power of 2 bigger than n
     """
 
     power = 

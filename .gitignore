@@ -2,6 +2,9 @@
 *~
 *.bak
 *.root
+*.png
+*.exe
+*.so
 
 # Binaries and libraries
 *.o
@@ -10,3 +13,18 @@
 # Build
 bin/
 obj/
+doc/html/
+
+# paper
+doc/method/q0-eps-converted-to.pdf
+doc/method/q1-eps-converted-to.pdf
+doc/method/q2-eps-converted-to.pdf
+doc/method/q3-eps-converted-to.pdf
+doc/method/q4-eps-converted-to.pdf
+doc/method/signal.aux
+doc/method/signal.bbl
+doc/method/signal.blg
+doc/method/signal.log
+doc/method/signal.out
+doc/method/signal.toc
+doc/method/signalNotes.bib
