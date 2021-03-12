@@ -2,7 +2,6 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 
-
 def nextPowerOf2(n): 
     """
     This function returns the closest power of 2 bigger than n
@@ -14,7 +13,6 @@ def nextPowerOf2(n):
 
 
 class spectrogram:
-    
     """
     Dedicated class to build a spectrogram with a Q plan methode
     """
@@ -37,15 +35,19 @@ class spectrogram:
 
 
     def def_time_range(self,time_range):
-
+	"""
+	This function is used to define the time range within the class
+	"""
+	
         self.time_range = time_range
     
         return
 
 
     def Q_bin_numb(self):
-        #define the Number of Q bins
-        
+    	"""
+        This function is used to define the Number of Q bins
+        """
         
         self.N_q =  
     
@@ -53,8 +55,9 @@ class spectrogram:
 
 
     def freq_bin_numb(self):
-        #define the Number of frequency bins
-        
+    	"""
+    	This function is used to define the Number of frequency bins
+    	"""      
         
         self.N_phi =
     
@@ -64,7 +67,6 @@ class spectrogram:
     def freqtiles_center_array(self):
         """
         This function define the center of each frequency bins and store it in a array
-        
         """
             
         self.freq_array = 
@@ -77,7 +79,6 @@ class spectrogram:
         This function define the number of tiles needed for each frequency bins (stored in a list) 
         
         WARNING: self.N_t is a list
-
         """
             
         self.N_t = 
@@ -130,8 +131,7 @@ class spectrogram:
         """
         This function fill the Q plan matrix with the values in each row
         """        
-        
-
+        #To be done
                
         return 
 
@@ -139,9 +139,8 @@ class spectrogram:
     def plot_matrix(self):
         """
         This function plot the Q plan matrix
-        
-        Need to be customized
         """
+        #Need to be customized
         
         plt.figure(1)
         plt.imshow(self.Q_plan_matrix)
