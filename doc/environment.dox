@@ -25,7 +25,7 @@ conda deactivate
 * Your computer project will be managed using git.
 * For each pair of student <u>only one code repository</u> should be created.
 *
-* @subsection environment_git_repo Git repository (STUDENT 1)
+* @subsection environment_git_repo1 Git repository (STUDENT 1)
 *
 * The original project should be cloned to your local computer:
 * ```
@@ -67,7 +67,7 @@ git push origin master
 * @warning For this project, 2 students will share the same remote repository.
 * Therefore the creation of the remote gitlab project should only be done once, by one of the student.
 *
-* @subsection environment_git_repo Git repository (STUDENT 2)
+* @subsection environment_git_repo2 Git repository (STUDENT 2)
 *
 * For the second student, the situation is simpler.
 * First, you just have to clone the repository initialized by your team partner:
