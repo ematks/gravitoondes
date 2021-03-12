@@ -1,7 +1,6 @@
 # GravitationalWaves
 
-The documentation for this project can be found at https://npac.pages.in2p3.fr/c
-alorimeter-simulation/
+The documentation for this project can be found at https://npac.pages.in2p3.fr/gravitational-waves
 
 ## Contributors
 
