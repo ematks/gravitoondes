@@ -23,27 +23,29 @@ conda deactivate
 * @section environment_git Git / GitLab
 *
 * Your computer project will be managed using git.
+* For each pair of student <u>only one code repository</u> should be created.
 *
-* @subsection environment_git_repo Git repository
+* @subsection environment_git_repo Git repository (STUDENT 1)
 *
 * The original project should be cloned to your local computer:
 * ```
 git clone https://gitlab.in2p3.fr/npac/gravitational-waves.git
 * ```
-* This repository must be redefined as the `upstream` project:
+* The `origin` repository must be redefined as the `upstream` project:
 * ```
 cd gravitational-waves/
 git remote rename origin upstream
 * ```
 * Go to [gitlab](https://gitlab.lal.in2p3.fr) and create a new project named `gravitational-waves`.
-* @note PLEASE, invite Florent Robinet as a member of your project: go to "members" and add Florent Robinet as a "developer"
+* @note PLEASE, invite Florent Robinet as a member of your project: go to "members" and add Florent Robinet as a "developer".
+* @note Invite also your team partner as a developer of the project.
 *
 * Add the `origin` remote to your local repository:
 * ```
 git remote add origin git@gitlab.lal.in2p3.fr:robinet/gravitational-waves.git
 * ```
 * @note Change `robinet` by your username.
-* @note This command assumes that a ssh key is in place.
+* @note This command assumes that a ssh key is in place. Please check!
 *
 * Now you should see 2 remote repositories:
 * ```
@@ -64,10 +66,20 @@ git push origin master
 * Now, your project is in place in gitlab. You can check it at https://gitlab.lal.in2p3.fr/robinet/gravitational-waves.
 * @warning For this project, 2 students will share the same remote repository.
 * Therefore the creation of the remote gitlab project should only be done once, by one of the student.
-* The second student should be added to the project as a "developer" and simply clone the origin:
+*
+* @subsection environment_git_repo Git repository (STUDENT 2)
+*
+* For the second student, the situation is simpler.
+* First, you just have to clone the repository initialized by your team partner:
 * ```
-git clone git@gitlab.lal.in2p3.fr:robinet/gravitational-waves.git
+git clone git@gitlab.lal.in2p3.fr:[partner]/gravitational-waves.git
 * ```
+* Replace `[partner]` by you partner username.
+* Then you need to add an upstream remote to get project updates:
+* ```
+git remote add upstream https://gitlab.in2p3.fr/npac/gravitational-waves.git
+* ```
+* That's it, you are ready to work.
 *
 * @subsection environment_git_worflow Git workflow
 *
