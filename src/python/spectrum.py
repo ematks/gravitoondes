@@ -1,7 +1,5 @@
 import numpy as np
 import matplotlib.pyplot as plt
-import ROOT
-from scipy.signal import hann 
 import copy
 
 
@@ -25,60 +23,33 @@ def define_plot_resolution():
 #Note that plot are still saved with it
 plt.ioff()
 
-#magic ROOT commande
-ROOT.ROOT.EnableImplicitMT()
+#load the data (the one in the numpy format)
+data = np.load("/home/ducoin/gravitational-waves.git/data/GW150914/h1.data.00.npy")
+x = data[0]
+y = data[1]
 
-#point out the root file
-root_file = ROOT.TFile("/home/ducoin/gravitational-waves.git/data/GW150914/l1.data.07.root","open")
-
-#get the datas
-Tgraph = root_file.Get("data")
-
-#get x and y axis
-x_buff = Tgraph.GetX()
-y_buff = Tgraph.GetY()
-
-#plot the signal
-plt.figure(1)
-plt.plot(x_buff,y_buff)
-plt.title('signal')
-plt.xlabel('gps time [s]')
-plt.ylabel('amplitude')
-define_plot_resolution()
-plt.savefig('signal.png')
-#plt.show()
-#N = Tgraph.GetN()
-#x_buff.SetSize(N)
-#y_buff.SetSize(N)
-
-#convert to numpy array (starting from now you can forget that ROOT exist)
-x_arr = np.array(x_buff)
-y_arr = np.array(y_buff)
-
-np.save('/home/ducoin/gravitational-waves.git/data/GW150914/l1.data.07.npy',np.array([x_arr,y_arr]))
-
-
-"""
 ##Compute the FFT
 #define the sampling frequency [Hz]
-fs = 
+fs = 1024
 
 #define the frequency array
-freq = 
-
+n = x.size
+freq = (fs/2) * np.linspace(0,1,int(n/2))
 
 #compute the fft
-fft = np.fft.fft(signal)
+fft = np.fft.fft(y)
 
+#keep the real part of this fft
+fft_to_plot = fft
 
+fft_real = np.real(fft)
+fft_real = abs(fft)
 
-#keep the "interesting" part of this fft for the following
-fft_to_plot=
-
+fft_m_real = fft_real[0:int(n/2)]
 
 #Plot the fft
 plt.figure(2)
-plt.plot(freq,np.log10(fft_to_plot))
+plt.plot(freq,np.log10(fft_m_real))
 plt.xlabel("frequency [Hz]")
 plt.ylabel("log spectrum magnitude")
 plt.title('FFT')
@@ -87,11 +58,12 @@ plt.savefig('fft.png')
 #plt.show()
 
 
+"""
 ###define the window used for the PSD estimation
 #define the number of point for the window (choose arbitrary value this is just to plot the shape)
 n_window = 
 
-hann_win = hann(n_window)
+hann_win = np.hanning(n_window)
 
 #plot to check that the window looks good
 plt.figure(3)
@@ -135,8 +107,8 @@ plt.ylabel("amplitude")
 plt.title('Whitened FFT')
 define_plot_resolution()
 plt.savefig('Whitened_FFT.png')
-
 """
+
 
 
 
