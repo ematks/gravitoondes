@@ -24,7 +24,7 @@ def define_plot_resolution():
 plt.ioff()
 
 #load the data (the one in the numpy format)
-data = np.load("/home/ducoin/gravitational-waves.git/data/GW150914/h1.data.00.npy")
+data = np.load("../../data/GW150914/h1.data.00.npy")
 x = data[0]
 y = data[1]
 
@@ -48,14 +48,14 @@ fft_real = abs(fft)
 fft_m_real = fft_real[0:int(n/2)]
 
 #Plot the fft
-plt.figure(2)
+plt.figure(1)
 plt.plot(freq,np.log10(fft_m_real))
 plt.xlabel("frequency [Hz]")
 plt.ylabel("log spectrum magnitude")
 plt.title('FFT')
 define_plot_resolution()
 plt.savefig('fft.png')
-#plt.show()
+
 
 
 """
@@ -71,7 +71,7 @@ plt.plot(hann_win)
 plt.title('Hann window')
 define_plot_resolution()
 plt.savefig('Hann_window.png')
-#plt.show()
+
 
 
 ##Compute the PSD (median methode)
@@ -89,7 +89,7 @@ plt.ylabel("amplitude")
 plt.title('PSD')
 define_plot_resolution()
 plt.savefig('PSD.png')
-#plt.show()
+
 
 
 ##Whitening
