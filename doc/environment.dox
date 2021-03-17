@@ -84,6 +84,8 @@ git remote add upstream https://gitlab.in2p3.fr/npac/gravitational-waves.git
 *
 * @subsection environment_git_worflow Git workflow
 *
+* ![repo.svg](repo.svg)
+*
 * @subsubsection environment_git_worflow_commit Commit your changes
 *
 * When you develop your code, you should frequently commit and push your changes to your remote repository (`origin`):

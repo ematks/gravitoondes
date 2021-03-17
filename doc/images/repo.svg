@@ -1,0 +1,137 @@
+<?xml version="1.0" standalone="no"?>
+<!-- Creator: fig2dev Version 3.2.7a -->
+<!-- CreationDate: 2021-03-17 16:02:36 -->
+<!-- Magnification: 1.05 -->
+<svg	xmlns="http://www.w3.org/2000/svg"
+	xmlns:xlink="http://www.w3.org/1999/xlink"
+	width="597pt" height="375pt"
+	viewBox="1788 1290 9474 5943">
+<g fill="none">
+<!-- Line -->
+<rect x="2700" y="5850" width="3555" height="1350" rx="105"
+	stroke="#000000" stroke-width="30px"/>
+<!-- Line -->
+<rect x="2700" y="2250" width="3555" height="1350" rx="105"
+	stroke="#ff0000" stroke-width="30px"/>
+<!-- Line -->
+<rect x="6795" y="2250" width="3555" height="1350" rx="105"
+	stroke="#0000ff" stroke-width="30px"/>
+<!-- Line -->
+<rect x="1800" y="1800" width="9450" height="2250" rx="105"
+	stroke="#000000" stroke-width="8px"/>
+<!-- Line -->
+<rect x="6795" y="5850" width="3555" height="1350" rx="105"
+	stroke="#000000" stroke-width="30px"/>
+<!-- Line -->
+<defs>
+<clipPath id="cp0">
+	<path clip-rule="evenodd" d="M 1788,1290 H 11262 V 7233 H 1788 z
+		M 9510,5457 9450,5487 9390,5457 9432,5688 9468,5688z"/>
+</clipPath>
+</defs>
+<polyline points=" 9450,5670 9450,3735" clip-path="url(#cp0)"
+	stroke="#000000" stroke-width="30px"/>
+<!-- Backward arrow to point 9450,5670 -->
+<polygon points=" 9390,5457 9450,5607 9510,5457 9450,5487 9390,5457"
+	stroke="#000000" stroke-width="45px" stroke-miterlimit="8" fill="#000000"/>
+<!-- Line -->
+<defs>
+<clipPath id="cp1">
+	<path clip-rule="evenodd" d="M 1788,1290 H 11262 V 7233 H 1788 z
+		M 8907,5540 8898,5606 8840,5639 9055,5733 9075,5703z"/>
+</clipPath>
+</defs>
+<polyline points=" 9050,5708 6170,3773" clip-path="url(#cp1)"
+	stroke="#000000" stroke-width="30px"/>
+<!-- Backward arrow to point 9050,5708 -->
+<polygon points=" 8840,5639 8998,5673 8907,5540 8898,5606 8840,5639"
+	stroke="#000000" stroke-width="45px" stroke-miterlimit="8" fill="#000000"/>
+<!-- Line -->
+<defs>
+<clipPath id="cp2">
+	<path clip-rule="evenodd" d="M 1788,1290 H 11262 V 7233 H 1788 z
+		M 4308,5566 4251,5530 4245,5463 4070,5619 4089,5650z"/>
+</clipPath>
+</defs>
+<polyline points=" 4095,5625 7204,3730" clip-path="url(#cp2)"
+	stroke="#000000" stroke-width="30px"/>
+<!-- Backward arrow to point 4095,5625 -->
+<polygon points=" 4245,5463 4149,5592 4308,5566 4251,5530 4245,5463"
+	stroke="#000000" stroke-width="45px" stroke-miterlimit="8" fill="#000000"/>
+<!-- Line -->
+<defs>
+<clipPath id="cp3">
+	<path clip-rule="evenodd" d="M 1788,1290 H 11262 V 7233 H 1788 z
+		M 7478,3820 7535,3856 7541,3923 7716,3767 7697,3736z
+		M 4308,5566 4251,5530 4245,5463 4070,5619 4089,5650z"/>
+</clipPath>
+</defs>
+<polyline points=" 4582,5656 7691,3761" clip-path="url(#cp3)"
+	stroke="#000000" stroke-width="30px"/>
+<!-- Forward arrow to point 7691,3761 -->
+<polygon points=" 7541,3923 7637,3794 7478,3820 7535,3856 7541,3923"
+	stroke="#000000" stroke-width="45px" stroke-miterlimit="8" fill="#000000"/>
+<!-- Line -->
+<defs>
+<clipPath id="cp4">
+	<path clip-rule="evenodd" d="M 1788,1290 H 11262 V 7233 H 1788 z
+		M 7478,3820 7535,3856 7541,3923 7716,3767 7697,3736z
+		M 3662,5368 3602,5397 3542,5367 3582,5598 3618,5598z"/>
+</clipPath>
+</defs>
+<polyline points=" 3600,5580 3618,3708" clip-path="url(#cp4)"
+	stroke="#000000" stroke-width="30px"/>
+<!-- Backward arrow to point 3600,5580 -->
+<polygon points=" 3542,5367 3601,5517 3662,5368 3602,5397 3542,5367"
+	stroke="#000000" stroke-width="45px" stroke-miterlimit="8" fill="#000000"/>
+<!-- Line -->
+<defs>
+<clipPath id="cp5">
+	<path clip-rule="evenodd" d="M 1788,1290 H 11262 V 7233 H 1788 z
+		M 9660,3948 9720,3918 9780,3948 9738,3717 9702,3717z
+		M 3662,5368 3602,5397 3542,5367 3582,5598 3618,5598z"/>
+</clipPath>
+</defs>
+<polyline points=" 9720,5670 9720,3735" clip-path="url(#cp5)"
+	stroke="#000000" stroke-width="30px"/>
+<!-- Forward arrow to point 9720,3735 -->
+<polygon points=" 9780,3948 9720,3798 9660,3948 9720,3918 9780,3948"
+	stroke="#000000" stroke-width="45px" stroke-miterlimit="8" fill="#000000"/>
+<!-- Text -->
+<text xml:space="preserve" x="3960" y="6300" fill="#000000" font-family="Times" font-style="normal" font-weight="normal" font-size="360" text-anchor="start">local</text>
+<!-- Text -->
+<text xml:space="preserve" x="3375" y="6885" fill="#000000" font-family="Times" font-style="normal" font-weight="normal" font-size="360" text-anchor="start">(Student 1)</text>
+<!-- Text -->
+<text xml:space="preserve" x="3555" y="2700" fill="#000000" font-family="Times" font-style="normal" font-weight="normal" font-size="360" text-anchor="start">upstream</text>
+<!-- Text -->
+<text xml:space="preserve" x="3555" y="3285" fill="#000000" font-family="Times" font-style="normal" font-weight="normal" font-size="360" text-anchor="start">(Florent)</text>
+<!-- Text -->
+<text xml:space="preserve" x="7965" y="2700" fill="#000000" font-family="Times" font-style="normal" font-weight="normal" font-size="360" text-anchor="start">origin</text>
+<!-- Text -->
+<text xml:space="preserve" x="7470" y="3285" fill="#000000" font-family="Times" font-style="normal" font-weight="normal" font-size="360" text-anchor="start">(Student 1)</text>
+<!-- Text -->
+<text xml:space="preserve" x="9990" y="1665" fill="#000000" font-family="Times" font-style="normal" font-weight="normal" font-size="360" text-anchor="start">gitlab</text>
+<!-- Text -->
+<text xml:space="preserve" x="8055" y="6300" fill="#000000" font-family="Times" font-style="normal" font-weight="normal" font-size="360" text-anchor="start">local</text>
+<!-- Text -->
+<text xml:space="preserve" x="7470" y="6885" fill="#000000" font-family="Times" font-style="normal" font-weight="normal" font-size="360" text-anchor="start">(Student 2)</text>
+<!-- Text -->
+<g transform="translate(3510,4770) rotate(-90)" >
+<text xml:space="preserve" x="0" y="0" fill="#000000" font-family="Times" font-style="normal" font-weight="normal" font-size="168" text-anchor="start">pull</text>
+</g><!-- Text -->
+<g transform="translate(9360,4815) rotate(-90)" >
+<text xml:space="preserve" x="0" y="0" fill="#000000" font-family="Times" font-style="normal" font-weight="normal" font-size="168" text-anchor="start">pull</text>
+</g><!-- Text -->
+<g transform="translate(5265,4815) rotate(-35)" >
+<text xml:space="preserve" x="0" y="0" fill="#000000" font-family="Times" font-style="normal" font-weight="normal" font-size="168" text-anchor="start">pull</text>
+</g><!-- Text -->
+<g transform="translate(7740,4725) rotate(-325)" >
+<text xml:space="preserve" x="0" y="0" fill="#000000" font-family="Times" font-style="normal" font-weight="normal" font-size="168" text-anchor="start">pull</text>
+</g><!-- Text -->
+<g transform="translate(5655,5290) rotate(-30)" >
+<text xml:space="preserve" x="0" y="0" fill="#000000" font-family="Times" font-style="normal" font-weight="normal" font-size="168" text-anchor="start">push</text>
+</g><!-- Text -->
+<g transform="translate(9945,4815) rotate(-90)" >
+<text xml:space="preserve" x="0" y="0" fill="#000000" font-family="Times" font-style="normal" font-weight="normal" font-size="168" text-anchor="start">push</text>
+</g></g>
+</svg>
