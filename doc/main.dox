@@ -35,6 +35,7 @@
 * @section main_description Project description
 *
 * 1. @ref fft "The Fourier transform"
+* 2. @ref whitening "The data whitening"
 * 
 */
 

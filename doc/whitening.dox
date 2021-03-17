@@ -1,0 +1,28 @@
+/*!
+* @page whitening Data whitening
+*
+* @tableofcontents
+*
+* @section whitening_whitening Noise power spectral density
+*
+* - Prepare your code to compute a spectrum over 2 seconds of data.
+* - Loop over the data to compute a spectrum over a segment of 2 seconds overlapping the previous segment by 1 second.
+* - Check online for the Welch method to estimate a power spectral density (PSD).
+* How can you modify this method to have a PSD estimator which is unbiased by outliers?
+* - Finally, average 2 PSD estimates, each of them estimated on non-overlapping segments.
+* - Plot the final PSD on top of all the 4-seconds estimates.
+* - Save your final PSD in a file (for both detectors!)
+*
+* @section whitening_whitening Whitening
+*
+* Now, let's start the data analysis and search for gravitational-wave events.
+* Start a new code from scratch to perform the following analysis steps:
+* - Loop over the data using 4-seconds long segments, overlapping by 1 second.
+* - Apply a Tukey window to transition from 0 to 1 in 1 second.
+* - Fourier-transform the data.
+* - Remove frequencies below 20 Hz (set them to 0).
+* - Whiten the data with the PSD, using the PSD you saved in @ref whitening_whitening "the previous section".
+* - Plot the whiten data in the frequency domain (spectrum). Is it what you expect?
+* - Fourier-transform the data back in the time domain. Can you "see" GW150914?
+*
+*/
