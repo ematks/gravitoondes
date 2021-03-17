@@ -128,7 +128,7 @@ git push origin
 * @section environment_doc Documentation
 *
 * When you push your changes to the remote repository, a documentation is automatically built.
-* Public web pages are posted online:
+* Public web pages are posted online at http://[username].ens-pages.lal.in2p3.fr/gravitational-waves
 *
 * [Doxygen](https://www.doxygen.nl/index.html) is used to generate the documentation.
 * Your code should be properly documented.
