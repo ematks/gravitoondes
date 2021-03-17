@@ -3,7 +3,7 @@
 *
 * @tableofcontents
 *
-* @section whitening_whitening Noise power spectral density
+* @section whitening_psd Noise power spectral density
 *
 * - Prepare your code to compute a spectrum over 2 seconds of data.
 * - Loop over the data to compute a spectrum over a segment of 2 seconds overlapping the previous segment by 1 second.
