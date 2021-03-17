@@ -64,6 +64,7 @@ git push --set-upstream origin master
 git push origin master
 * ```
 * Now, your project is in place in gitlab. You can check it at https://gitlab.lal.in2p3.fr/robinet/gravitational-waves.
+* @note You must unprotect your master branch so your teammate can push changes. Go to Settings > Repository > Protected branch and push the "Unprotect" button.
 * @warning For this project, 2 students will share the same remote repository.
 * Therefore the creation of the remote gitlab project should only be done once, by one of the student.
 *
