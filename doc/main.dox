@@ -37,6 +37,8 @@
 *
 * 1. @ref fft "The Fourier transform"
 * 2. @ref whitening "The data whitening"
+* 3. @ref tiling "Tiling the parameter space"
+* 4. @ref qtransform "The Q transform"
 * 
 */
 
