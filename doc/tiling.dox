@@ -1,0 +1,13 @@
+/*!
+* @page tiling Tiling the parameter space
+*
+* Before applying the Q transform, the time-frequency plane needs to be tiled.
+* For this, we will refer to the [Method note](./method/signal.pdf).
+* - Develop a class (`spectrogram` in tiler.py) to descibre a multi-resolution tiling:
+*   - the resolution is defined by a given Q value and a mismatch between the tiles (constructor)
+*   - use a simple grid: logarithmically-spaced frequency rows, and linearly-distributed time bins.
+*  - map the tiles onto the grid
+*  - develop the functions to access/fill the tiles
+*
+* @ref whitening "PREVIOUS" - @ref qtransform "NEXT"
+*/

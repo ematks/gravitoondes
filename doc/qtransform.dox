@@ -1,0 +1,12 @@
+/*!
+* @page qtransform The Q transform
+*
+* - Prepare the bisquare window for each frequency row.
+* - Prepare the normalization factor for each frequency row.
+* - Fill the input vector
+* - Perform the inverse Fourier transform for each row.
+* - Fill your tiling structure,
+* - save your final spectrogram.
+*
+* @ref tiling "PREVIOUS"
+*/
