@@ -20,15 +20,25 @@ def define_plot_resolution():
 #Note that plot are still saved with it
 plt.ioff()
 
-#load the data (the one in the numpy format)
-data = np.load("../../data/GW150914/h1.data.00.npy")
-x = data[0]
-y = data[1]
+#define the sampling frequency [Hz]
+fs = 1024
+
+#define the duration [s]
+duration = 10
+
+#define the number of points
+nsamples = fs * duration
+
+#define the timeserie amplitude array (filled with a constant for example here)
+amplitude = nsamples * [5]
+
+#define the time array
+time = np.arange(0,nsamples,1)
 
 
 #Plot the fft
 plt.figure(1)
-plt.plot(x,y)
+plt.plot(time,amplitude)
 plt.xlabel("Time [s]")
 plt.ylabel("Amplitude")
 plt.title('timeserie')
