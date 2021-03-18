@@ -16,6 +16,7 @@
 * This project is about developing a code to process the LIGO strain time series.
 * This idea is to implement some basic technics in signal processing such as noise estimation, noise whitening, and short Fourier transforms.
 * The final result will be to plot the spectrogram of GW150914 to visualize the gravitational-wave signal.
+*
 * ![H1-GW150914-spectrogram](H1-GW150914-spectrogram.png "GW150914 spectrogram in LIGO-Hanford data.")
 
 *
