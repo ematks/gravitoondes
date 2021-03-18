@@ -68,4 +68,5 @@ x[j]=\frac{f_s}{N}\sum_{k=0}^{N-1}{\tilde{x}[k]\mathrm{e}^{+2i\pi jk/N}}.
 * - Plot the spectrum including the negative frequencies.
 * - Perform a BACKWARD Fourier transform and check that the original signal is recovered.
 *
+* @ref whitening "NEXT"
 */

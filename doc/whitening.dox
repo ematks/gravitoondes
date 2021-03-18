@@ -9,6 +9,7 @@
 * - Loop over the data to compute a spectrum over a segment of 2 seconds overlapping the previous segment by 1 second.
 * - Check online for the Welch method to estimate a power spectral density (PSD).
 * How can you modify this method to have a PSD estimator which is unbiased by outliers?
+* - Apply this method for each frequency bin to estimate a robust noise PSD.
 * - Finally, average 2 PSD estimates, each of them estimated on non-overlapping segments.
 * - Plot the final PSD on top of all the 4-seconds estimates.
 * - Save your final PSD in a file (for both detectors!)
@@ -25,4 +26,5 @@
 * - Plot the whiten data in the frequency domain (spectrum). Is it what you expect?
 * - Fourier-transform the data back in the time domain. Can you "see" GW150914?
 *
+* @ref fft "PREVIOUS" - @ref tiling "NEXT"
 */
