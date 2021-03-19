@@ -48,7 +48,7 @@ x[j]=\frac{f_s}{N}\sum_{k=0}^{N-1}{\tilde{x}[k]\mathrm{e}^{+2i\pi jk/N}}.
 *   - mark the special index \f$k=N/2\f$
 *   - associate the time (resp. the frequency) to each index \f$j\f$ (resp. \f$k\f$).
 * - KEEP THIS DRAWING AS A REFERENCE!!!
-* - Write a program to Fourier-transfom a discrete time series and plot the resulting spectrum. The power spectrum is defined as \f${\cal{P}}(f) = |x(f)|^2\f$ and the amplitude spectrum is defined as \f${\cal{A}}(f) = \sqrt{|x(f)|^2}\f$. As a starting point, you can use `basic.cc`/`basic.py`. Use the following functions:
+* - Write a program to Fourier-transfom a discrete time series and plot the resulting spectrum. The power spectrum is defined as \f${\cal{P}}(f) = |\tilde{x}(f)|^2\f$ and the amplitude spectrum is defined as \f${\cal{A}}(f) = \sqrt{|\tilde{x}(f)|^2}\f$. As a starting point, you can use `basic.cc`/`basic.py`. Use the following functions:
 *   - \f$x(t) = A\f$ (constant function)
 *   - \f$x(t) = A\sin(2\pi f_0t)\f$, with \f$f_0=200\f$ Hz
 *   - \f$x(t) = Ae^{-\frac{(t-t_0)^2}{2\sigma^2}}\f$, with \f$t_0=2\f$ s is the center of your time segment, and \f$\sigma=0.1\f$ s.
