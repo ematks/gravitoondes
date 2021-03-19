@@ -5,14 +5,16 @@
 *
 * @section whitening_psd Noise power spectral density
 *
-* - Prepare your code to compute a spectrum over 2 seconds of data.
+* - Prepare your code to compute a spectrum over \f$T_s=2\f$ seconds of data.
 * - Loop over the data to compute a spectrum over a segment of 2 seconds overlapping the previous segment by 1 second.
 * - Check online for the Welch method to estimate a power spectral density (PSD).
-* How can you modify this method to have a PSD estimator which is unbiased by outliers?
+* The data of gravitational-wave detectors are polluted by spurious "glitches" causing high power excess in the data. As a result, for some segments, the PSD estimate will be biased. How can you modify the Welch method to have a PSD estimator which is unbiased by outliers?
 * - Apply this method for each frequency bin to estimate a robust noise PSD.
-* - Finally, average 2 PSD estimates, each of them estimated on non-overlapping segments.
-* - Plot the final PSD on top of all the 4-seconds estimates.
+* - Finally, average 2 PSD estimates, each of them estimated on non-overlapping segments (\f$N_e\f$ and \f$N_o\f$ segments).
+* - Plot the final PSD on top of all the 2-seconds estimates.
 * - Save your final PSD in a file (for both detectors!)
+*
+* ![PSD estimation](spectrum.svg "PSD estimation")
 *
 * @section whitening_whitening Whitening
 *
