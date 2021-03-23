@@ -20,8 +20,9 @@
 *
 * Now, let's start the data analysis and search for gravitational-wave events.
 * Start a new code from scratch to perform the following analysis steps:
-* - Loop over the data using 4-seconds long segments, overlapping by 1 second.
-* - Apply a Tukey window to transition from 0 to 1 in 1 second.
+* - Loop over the data using 4-seconds long segments, overlapping by 2 seconds.
+* - Apply a Tukey window to transition from 0 to 1 in 1 second at the beginning of the window and from 1 to 0 in 1 second at the end of the window.
+* The first and last second must be ignored; only the central part is relevant.
 * - Fourier-transform the data.
 * - Remove frequencies below 20 Hz (set them to 0).
 * - Whiten the data with the PSD, using the PSD you saved in @ref whitening_whitening "the previous section".

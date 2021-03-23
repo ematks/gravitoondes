@@ -28,6 +28,22 @@
 * - Fourier transforms are performed with [FFTW](http://www.fftw.org/). See also the [documentation](http://www.fftw.org/fftw3_doc/) and the [pyhton counterpart](https://numpy.org/doc/stable/reference/routines.fft.html).
 * - [qsort algorithm](http://www.cplusplus.com/reference/cstdlib/qsort/)
 *
+* @section main_evaluation Evaluation
+*
+* The computer project is evaluated with the following criteria:
+* - code (15/20)
+*   - implementation of the methods (7/20)
+*   - diagnostic plots to check that the code is producing sane results (5/20)
+*   - code optimization (1/20)
+*   - code cleanliness and documentation (2/20)
+* - final presentation (5/20)
+*
+* In your final presentation you should:
+* - describe the project and the methods
+* - explain your choices to implement the methods in your code
+* - show snippets of code to explain your implementation
+* - show diagnostic plots to prove your code is working as expected
+*
 * @section main_environment Environment
 *
 * For this project, you will have to install some software on your computer.
