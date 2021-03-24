@@ -47,8 +47,9 @@ X(m, l)
 *
 * @section qtransform_implementation Implementation
 *
-* - Prepare the bisquare window for each frequency row.
+* - Prepare the bisquare window for each frequency row. It might be a good idea to include the window in your tiling class.
 * - Prepare the normalization factor for each frequency row.
+* - Use your analysis code from @ref whitening "the whitening section" and initialize a `tiler` object with the correct parameters.
 * - write and fill the input vector \f$\tilde{v}_{l}\f$ for each frequency row.
 * - Perform the inverse Fourier transform for each row.
 * - Fill your tiling structure,
