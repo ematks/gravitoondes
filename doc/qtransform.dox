@@ -100,7 +100,7 @@ X(m, l) = \frac{N_\tau}{N} \; \times \; \frac{f_s}{N_\tau} \sum_{k=0}^{N_\tau-1}
   \end{cases}
 * \f]
 *
-* @section qtransform_implementation Implementation
+* @section qtransform_spectrogram Spectrogram
 *
 * - Prepare the bisquare window for each frequency row. It might be a good idea to include the window in your tiling class.
 * - Prepare the normalization factor for each frequency row.
