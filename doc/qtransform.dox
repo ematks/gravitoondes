@@ -14,6 +14,36 @@ X(\tau, \phi, Q=8.253) = \int_{-\infty}^{+\infty}{ \tilde{x}(f+\phi) \tilde{w}^{
 X(j,l)=\frac{f_s}{N}\sum_{k=0}^{N-1}{\tilde{x}[k+p_{l}]\tilde{w}_{l}^*[k]\mathrm{e}^{+2i\pi jk/N}},
 * \f]
 * where \f$p_{l}=\lfloor \phi_{l}T \rfloor\f$ is the number of frequency samples associated to a frequency shift of \f$\phi_{l}\f$.
+* @note The shifted index, \f$k+p_{l}\f$, seems to lead to out-of-range issues for the \f$\tilde{x}\f$ array. One must keep in mind that anti-aliasing conditions are applied to prevent this.
+* This issue, not important at this point, will be properly addressed below
+*
+* @section qtransform_window The window
+*
+* The Q-transform includes windowing the data in the frequency domain.
+* We use a bisquare window to approximate the ideal Gaussian window.
+* Such a bisquare window is generated for each frequency row \f$l\f$ composing the tiling structure.
+* The window expression must be discretized:
+* \f[
+\tilde{w}_{l}[k] = \tilde{w}_{l}^*[k] =
+  \begin{cases}
+    W_b \left[1 - \left(\frac{2k}{M_{l}-1}\right)^2 \right]^2 & 0\le k < \frac{M_{l}+1}{2}, \\
+    W_b \left[1 - \left(\frac{2(k-N)}{M_{l}-1}\right)^2 \right]^2 & N-\frac{M_{l}-1}{2}\le k < N, \\
+    0 & \textrm{otherwise},
+  \end{cases}
+* \f]
+* where \f$M_{l}=2\lfloor \delta f(\phi_{l}) T \rfloor + 1\f$ is the window size, obtained using the relation \f$\delta f(\phi_{l}) = \phi_{l}\sqrt{11}/Q\f$.
+* The window vector \f$\tilde{w}\f$ is computed for each frequency row \f$l\f$.
+* Note that the 0 values are not saved and
+* \f[
+\tilde{w}_{l}[k] = \tilde{w}_{l}^*[k] =
+  \begin{cases}
+    W_b \left[1 - \left(\frac{2k}{M_{l}-1}\right)^2 \right]^2 & 0\le k < \frac{M_{l}+1}{2}, \\
+    W_b \left[1 - \left(\frac{2(k-M_{l})}{M_{l}-1}\right)^2 \right]^2 & \frac{M_{l}+1}{2}\le k < M_{l}.
+  \end{cases}
+* \f]
+*
+* @section qtransform_implementation The implementation
+*
 * In the tiling structure generated in @ref tiling "the previous section", for a given frequency row, only \f$N_\tau(\phi_l)\f$ Q transform coefficients must be computed to cover the time range \f$T\f$.
 * Using the time position of tile \f$(m,l)\f$, we get the simple relation \f$j=(m+1/2)\frac{N}{N_\tau}\f$.
 * As a result, the discrete Q transform coefficient for tile \f$(m,l)\f$ becomes
@@ -44,6 +74,31 @@ X(m, l)
 * This is possible because both \f$N\f$ and \f$N_\tau\f$ are power-of-two values so we have: \f$\mathrm{e}^{+2i\pi m(k+N-N_\tau)/N_\tau} = \mathrm{e}^{+2i\pi mk/N_\tau}\f$ and \f$\mathrm{e}^{i\pi (k+N-N_\tau)/N_\tau}=-\mathrm{e}^{i\pi k/N_\tau}\f$.
 *
 * This final equation is an inverse Fourier transform of a vector \f$\tilde{v}_{l}\f$ of size \f$N_\tau\f$.
+* Finally, this can be recombined into a single sum:
+* \f[
+X(m, l) = \frac{N_\tau}{N} \; \times \; \frac{f_s}{N_\tau} \sum_{k=0}^{N_\tau-1}{\tilde{v}_{l}[k]\mathrm{e}^{+2i\pi mk/N_\tau}},
+* \f]
+* where
+* \f[
+\tilde{v}_{l}[k] =
+\begin{cases}
+  \tilde{x}[k+p_{l}]\tilde{w}_{l}^*[k]\mathrm{e}^{i\pi k/N_\tau} & 0 \le k < (M_{l}+1)/2 \\
+  0 & (M_{l}+1)/2 \le k < N_\tau-(M_{l}-1)/2 \\
+  -\tilde{x}[k+N-N_\tau+p_{l}]\tilde{w}_{l}^*[k+N-N_\tau]\mathrm{e}^{i\pi k/N_\tau} & N_\tau-(M_{l}-1)/2 \le k < N_\tau.
+\end{cases}
+* \f]
+* This equation shows that a single and less expensive inverse Fourier transform of \f$\tilde{v}_{l}\f$ is sufficient to populate the \f$N_\tau\f$ tiles of a frequency row \f$l\f$.
+* Care must be taken when populating the \f$\tilde{v}_{l}\f$ array.
+* Indeed, one must reconcile the different size conventions used until this point: \f$\tilde{v}_{l}\f$ is of size \f$N_\tau\f$, the whitened data vector, \f$\tilde{x}\f$, resulting from a real-to-complex Fourier transform, is of size \f$N\f$, and the window, \f$\tilde{w}^*_{l}\f$, saved without the zero values, is of size \f$M_{l}\f$.
+* When taking into account these conventions, the array \f$\tilde{v}_{l}\f$ now writes:
+* \f[
+\tilde{v}_{l}[k] =
+\begin{cases}
+  \tilde{x}[k+p_{l}]\tilde{w}_{l}^*[k]\mathrm{e}^{i\pi k/N_\tau} & 0 \le k < (M_{l}+1)/2 \\
+  0 & (M_{l}+1)/2 \le k < N_\tau-(M_{l}-1)/2 \\
+  -\tilde{x}[\;|N_\tau-k-p_{l}|\;]\tilde{w}_{l}^*[k+M_{l}-N_\tau]\mathrm{e}^{i\pi k/N_\tau} & N_\tau-(M_{l}-1)/2 \le k < N_\tau.
+  \end{cases}
+* \f]
 *
 * @section qtransform_implementation Implementation
 *
@@ -51,7 +106,7 @@ X(m, l)
 * - Prepare the normalization factor for each frequency row.
 * - Use your analysis code from @ref whitening "the whitening section" and initialize a `tiler` object with the correct parameters.
 * - write and fill the input vector \f$\tilde{v}_{l}\f$ for each frequency row.
-* - Perform the inverse Fourier transform for each row.
+* - Perform the inverse Fourier transform of \f$\tilde{v}_{l}\f$ for each row.
 * - Fill your tiling structure,
 * - save your final spectrogram.
 *
