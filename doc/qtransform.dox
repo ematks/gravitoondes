@@ -1,9 +1,55 @@
 /*!
 * @page qtransform The Q transform
 *
+* @section qtransform_discrete The discrete Q transform
+*
+* The tiling structure must be filled with the Q-transform coefficients.
+* We use the following definition (see Eq. 7 in the method note):
+* \f[
+X(\tau, \phi, Q=8.253) = \int_{-\infty}^{+\infty}{ \tilde{x}(f+\phi) \tilde{w}^{*}(f,\phi) e^{+2i\pi f \tau}df},
+* \f]
+* where the bisquare window, \f$\tilde{w}^{*}\f$, approximates a Gaussian window.
+* For discrete data we have:
+* \f[
+X(j,l)=\frac{f_s}{N}\sum_{k=0}^{N-1}{\tilde{x}[k+p_{l}]\tilde{w}_{l}^*[k]\mathrm{e}^{+2i\pi jk/N}},
+* \f]
+* where \f$p_{l}=\lfloor \phi_{l}T_c \rfloor\f$ is the number of frequency samples associated to a frequency shift of \f$\phi_{l}\f$.
+* In the tiling structure generated in @ref tiling "the previous section", for a given frequency row, only \f$N_\tau(\phi_l)\f$ Q transform coefficients must be computed to cover the time range \f$T\f$.
+* Using the time position of tile \f$(m,l)\f$, we get the simple relation \f$j=(m+1/2)\frac{N}{N_\tau}\f$.
+* As a result, the discrete Q transform coefficient for tile \f$(m,l)\f$ becomes
+* \f[
+X(m, l) = \frac{f_s}{N}\sum_{k=0}^{N-1}{\tilde{x}[k+p_{l}]\tilde{w}_{l}^*[k]\mathrm{e}^{i\pi k/N_\tau}\mathrm{e}^{+2i\pi mk/N_\tau}}.
+* \f]
+* The phase shift of \f$\pi\f$ is introduced to correct for half a tile to recover the central time of a tile.
+* The bisquare window takes non-zero values only over \f$M_{l}\f$ samples.
+* As a result, we can rewrite the Q-transform coefficient as the sum of three terms:
+* \f[
+\begin{align*}
+X(m, l) = & \frac{f_s}{N} \sum_{k=0}^{(M_{l}-1)/2}{\tilde{x}[k+p_{l}]\tilde{w}_{l}^*[k]\mathrm{e}^{i\pi k/N_\tau} \; \mathrm{e}^{+2i\pi mk/N_\tau}} \\
++ & \frac{f_s}{N} \sum_{k=(M_{l}+1)/2}^{N-(M_{l}-3)/2}{0 \; \mathrm{e}^{+2i\pi mk/N_\tau}} \\
++ & \frac{f_s}{N} \sum_{k=N-(M_{l}-1)/2}^{N-1}{\tilde{x}[k+p_{l}]\tilde{w}_{l}^*[k]\mathrm{e}^{i\pi k/N_\tau} \; \mathrm{e}^{+2i\pi mk/N_\tau}} .
+\end{align*}
+* \f]
+* The second term consists of summing \f$N-M_{l}\f$ zeros.
+* It is possible to remove \f$N-N_\tau\f$ zeros in that sum so that \f$X(m,l)\f$ becomes a sum of \f$N_\tau\f$ terms:
+* \f[
+\begin{align*}
+X(m, l)
+= & \frac{f_s}{N} \sum_{k=0}^{(M_{l}-1)/2}{\tilde{x}[k+p_{l}]\tilde{w}_{l}^*[k]\mathrm{e}^{i\pi k/N_\tau} \; \mathrm{e}^{+2i\pi mk/N_\tau}} \\
++ & \frac{f_s}{N} \sum_{k=(M_{l}+1)/2}^{N_\tau-(M_{l}-3)/2}{0 \; \mathrm{e}^{+2i\pi mk/N_\tau}} \\
+- & \frac{f_s}{N} \sum_{k=N_\tau-(M_{l}-1)/2}^{N_\tau-1}{\tilde{x}[k+N-N_\tau+p_{l}]\tilde{w}_{l}^*[k+N-N_\tau]\mathrm{e}^{i\pi k/N_\tau} \; \mathrm{e}^{+2i\pi mk/N_\tau}} .
+\end{align*}
+* \f]
+* Note that the index \f$k\f$ of the third term has been shifted to match the end of the second sum: \f$k-(N-N_\tau) \rightarrow k\f$.
+* This is possible because both \f$N\f$ and \f$N_\tau\f$ are power-of-two values so we have: \f$\mathrm{e}^{+2i\pi m(k+N-N_\tau)/N_\tau} = \mathrm{e}^{+2i\pi mk/N_\tau}\f$ and \f$\mathrm{e}^{i\pi (k+N-N_\tau)/N_\tau}=-\mathrm{e}^{i\pi k/N_\tau}\f$.
+*
+* This final equation is an inverse Fourier transform of a vector \f$\tilde{v}_{l}\f$ of size \f$N_\tau\f$.
+*
+* @section qtransform_implementation Implementation
+*
 * - Prepare the bisquare window for each frequency row.
 * - Prepare the normalization factor for each frequency row.
-* - Fill the input vector
+* - write and fill the input vector \f$\tilde{v}_{l}\f$ for each frequency row.
 * - Perform the inverse Fourier transform for each row.
 * - Fill your tiling structure,
 * - save your final spectrogram.

@@ -6,8 +6,10 @@
 * - Develop a class (`spectrogram` in tiler.py) to descibre a multi-resolution tiling:
 *   - the resolution is defined by a given Q value and a mismatch between the tiles (constructor)
 *   - use a simple grid: logarithmically-spaced frequency rows, and linearly-distributed time bins.
+*   - for the minimum and maximum frequencies, \f$\phi_{min}\f$ and \f$\phi_{max}\f$, check the boundary condition in the method paper.
 *   - map the tiles onto the grid
 *   - develop the functions to access/fill the tiles
+* - For the following we will use \f$Q=8.253\f$ and \f$\mu_{max}=0.2\f$
 *
 * @ref whitening "PREVIOUS" - @ref qtransform "NEXT"
 */
