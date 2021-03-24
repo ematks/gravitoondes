@@ -13,7 +13,7 @@ X(\tau, \phi, Q=8.253) = \int_{-\infty}^{+\infty}{ \tilde{x}(f+\phi) \tilde{w}^{
 * \f[
 X(j,l)=\frac{f_s}{N}\sum_{k=0}^{N-1}{\tilde{x}[k+p_{l}]\tilde{w}_{l}^*[k]\mathrm{e}^{+2i\pi jk/N}},
 * \f]
-* where \f$p_{l}=\lfloor \phi_{l}T_c \rfloor\f$ is the number of frequency samples associated to a frequency shift of \f$\phi_{l}\f$.
+* where \f$p_{l}=\lfloor \phi_{l}T \rfloor\f$ is the number of frequency samples associated to a frequency shift of \f$\phi_{l}\f$.
 * In the tiling structure generated in @ref tiling "the previous section", for a given frequency row, only \f$N_\tau(\phi_l)\f$ Q transform coefficients must be computed to cover the time range \f$T\f$.
 * Using the time position of tile \f$(m,l)\f$, we get the simple relation \f$j=(m+1/2)\frac{N}{N_\tau}\f$.
 * As a result, the discrete Q transform coefficient for tile \f$(m,l)\f$ becomes
