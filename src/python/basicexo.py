@@ -54,20 +54,49 @@ plt.savefig('myplot_timeseries.png')
 
 FT = np.fft.fft(a2)/len(a2)           # Normalize amplitude
 print(len(FT))
-#FT = FT[range(int(len(a2)/2))]  # Exclude sampling frequency
+FT = FT[range(int(len(a2)/2))]  # Exclude sampling frequency
 
+inv_FT = np.fft.ifft(a2)/len(a2)
+inv_FT = inv_FT[range(int(len(a2)/2))]
 tpCount = len(a2)
 
-values = np.arange(int(tpCount))
+values = np.arange(int(tpCount/2))
 
 timePeriod  = tpCount/fs
 
 frequencies = values/timePeriod
 
 plt.figure(2)
-plt.plot(frequencies,abs(FT))
+plt.loglog(frequencies,abs(FT))
 plt.xlabel("Frequency")
 plt.ylabel("Amplitude")
 plt.title('frequency')
 define_plot_resolution()
 plt.savefig('myplot_frequency.png')
+
+plt.figure(3)
+plt.loglog(frequencies,abs(inv_FT)**2)
+plt.xlabel("Frequency")
+plt.ylabel("Amplitude")
+plt.title('power spectrum')
+define_plot_resolution()
+plt.savefig('myplot_power.png')
+
+
+plt.figure(4)
+plt.plot(frequencies,abs(np.real(FT))**2)
+plt.xlabel("Frequency")
+plt.ylabel("Amplitude")
+plt.title('power spectrum')
+define_plot_resolution()
+plt.savefig('myplot_real.png')
+
+plt.figure(5)
+plt.plot(frequencies,abs(np.imag(FT))**2)
+plt.xlabel("Frequency")
+plt.ylabel("Amplitude")
+plt.title('power spectrum')
+define_plot_resolution()
+plt.savefig('myplot_imag.png')
+
+
