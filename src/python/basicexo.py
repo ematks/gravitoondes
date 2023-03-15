@@ -35,15 +35,39 @@ amplitude = nsamples * [5]
 #define the time array
 time = np.arange(0,nsamples,1)
 
+#define frequency of the signal
+f1 = 200
+a2 = np.sin(2*np.pi*f1*time)
+print(len(a2))
+
 
 #Plot the fft
 plt.figure(1)
-plt.plot(time,amplitude)
+plt.plot(time,a2)
 plt.xlabel("Time [s]")
 plt.ylabel("Amplitude")
 plt.title('timeserie')
 define_plot_resolution()
 plt.savefig('myplot_timeseries.png')
 
-#basic biche pt2
+# Frequency domain representation
 
+FT = np.fft.fft(a2)/len(a2)           # Normalize amplitude
+print(len(FT))
+#FT = FT[range(int(len(a2)/2))]  # Exclude sampling frequency
+
+tpCount = len(a2)
+
+values = np.arange(int(tpCount))
+
+timePeriod  = tpCount/fs
+
+frequencies = values/timePeriod
+
+plt.figure(2)
+plt.plot(frequencies,abs(FT))
+plt.xlabel("Frequency")
+plt.ylabel("Amplitude")
+plt.title('frequency')
+define_plot_resolution()
+plt.savefig('myplot_frequency.png')
