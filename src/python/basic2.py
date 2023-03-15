@@ -1,3 +1,4 @@
+import pathlib
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -14,28 +15,19 @@ def define_plot_resolution():
     fig.set_size_inches(1920.0/float(DPI),1080.0/float(DPI))
     
     return
-    
-#This commande turn matplotlib interactive mode off.
-#Plot will not be desplayed as long as it is activate
-#Note that plot are still saved with it
-plt.ioff()
 
-#define the sampling frequency [Hz]
+DATA_PATH = pathlib.Path(__file__).parents[1] / "data"
+
+file = "data/GW150914/h1.data.00.npy"
+
+data = np.load(file)
+
+Dt = 10000 #time in seconds
 fs = 1024
+nb_points= fs * Dt
+data = data[0:nb_points]
 
-#define the duration [s]
-duration = 10
-
-#define the number of points
-nsamples = fs * duration
-
-#define the timeserie amplitude array (filled with a constant for example here)
-amplitude = nsamples * [5]
-
-#define the time array
-time = np.arange(0,nsamples,1)
-
-
+time, amplitude = data[0] , data[1]
 #Plot the fft
 plt.figure(1)
 plt.plot(time,amplitude)
@@ -44,6 +36,3 @@ plt.ylabel("Amplitude")
 plt.title('timeserie')
 define_plot_resolution()
 plt.savefig('myplot_timeseries.png')
-
-#basic biche pt2
-
