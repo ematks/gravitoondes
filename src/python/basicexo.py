@@ -29,11 +29,8 @@ duration = 10
 #define the number of points
 nsamples = fs * duration
 
-#define the timeserie amplitude array (filled with a constant for example here)
-amplitude = nsamples * [5]
-
 #define the time array
-time = np.arange(0,nsamples,1)
+time = np.linspace(0,duration,nsamples)
 
 #define frequency of the signal
 f1 = 200
@@ -66,37 +63,36 @@ timePeriod  = tpCount/fs
 
 frequencies = values/timePeriod
 
-plt.figure(2)
+
+
+plt.subplot(411)
 plt.loglog(frequencies,abs(FT))
 plt.xlabel("Frequency")
 plt.ylabel("Amplitude")
 plt.title('frequency')
 define_plot_resolution()
-plt.savefig('myplot_frequency.png')
 
-plt.figure(3)
+plt.subplot(412)
 plt.loglog(frequencies,abs(inv_FT)**2)
 plt.xlabel("Frequency")
 plt.ylabel("Amplitude")
 plt.title('power spectrum')
 define_plot_resolution()
-plt.savefig('myplot_power.png')
 
 
-plt.figure(4)
+plt.subplot(413)
 plt.plot(frequencies,abs(np.real(FT))**2)
 plt.xlabel("Frequency")
 plt.ylabel("Amplitude")
 plt.title('power spectrum')
 define_plot_resolution()
-plt.savefig('myplot_real.png')
 
-plt.figure(5)
+plt.subplot(414)
 plt.plot(frequencies,abs(np.imag(FT))**2)
 plt.xlabel("Frequency")
 plt.ylabel("Amplitude")
 plt.title('power spectrum')
 define_plot_resolution()
-plt.savefig('myplot_imag.png')
+plt.savefig('myplot_all.png')
 
 
