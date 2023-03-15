@@ -18,7 +18,6 @@ def define_plot_resolution():
 #This commande turn matplotlib interactive mode off.
 #Plot will not be desplayed as long as it is activate
 #Note that plot are still saved with it
-plt.ioff()
 
 #define the sampling frequency [Hz]
 fs = 1024
@@ -34,13 +33,14 @@ time = np.linspace(0,duration,nsamples)
 
 #define frequency of the signal
 f1 = 200
-a2 = np.sin(2*np.pi*f1*time)
-print(len(a2))
+sin_ex = np.sin(2*np.pi*f1*time)
+gauss_ex = np.exp(-(time-2)**2/(2*0.1**2))
+data= gauss_ex
 
 
 #Plot the fft
 plt.figure(1)
-plt.plot(time,a2)
+plt.plot(time,data)
 plt.xlabel("Time [s]")
 plt.ylabel("Amplitude")
 plt.title('timeserie')
@@ -49,49 +49,60 @@ plt.savefig('myplot_timeseries.png')
 
 # Frequency domain representation
 
-FT = np.fft.fft(a2)/len(a2)           # Normalize amplitude
+""" Tried to do it by hand, i's a failure for now
+FT = np.fft.fft(data)/len(data)           # Normalize amplitude
 print(len(FT))
-FT = FT[range(int(len(a2)/2))]  # Exclude sampling frequency
+N = len(data)
+range_pos = range(0, int(N/2))
+FT_pos = FT[range_pos]  # Exclude sampling frequency
+range_neg = range(N-1, int(N/2), -1)
+FT_neg = FT[range_neg]
+FT_neg=np.append(FT[0], FT_neg)
 
-inv_FT = np.fft.ifft(a2)/len(a2)
-inv_FT = inv_FT[range(int(len(a2)/2))]
-tpCount = len(a2)
 
-values = np.arange(int(tpCount/2))
+FT_sum = FT_neg - FT_pos
+"""
+
+FT=np.fft.rfft(data)
+
+inv_FT = np.fft.irfft(FT)
+
+tpCount = len(data)
+
+values = np.arange(int(tpCount/2)+1)
 
 timePeriod  = tpCount/fs
 
 frequencies = values/timePeriod
 
 
-
+#sinus plots
 plt.subplot(411)
-plt.loglog(frequencies,abs(FT))
+plt.plot(frequencies,abs(FT))
 plt.xlabel("Frequency")
 plt.ylabel("Amplitude")
 plt.title('frequency')
 define_plot_resolution()
 
 plt.subplot(412)
-plt.loglog(frequencies,abs(inv_FT)**2)
+plt.plot(time,abs(inv_FT))
 plt.xlabel("Frequency")
 plt.ylabel("Amplitude")
-plt.title('power spectrum')
+plt.title('inv_FT')
 define_plot_resolution()
-
 
 plt.subplot(413)
 plt.plot(frequencies,abs(np.real(FT))**2)
 plt.xlabel("Frequency")
 plt.ylabel("Amplitude")
-plt.title('power spectrum')
+plt.title('real_FT')
 define_plot_resolution()
 
 plt.subplot(414)
 plt.plot(frequencies,abs(np.imag(FT))**2)
 plt.xlabel("Frequency")
 plt.ylabel("Amplitude")
-plt.title('power spectrum')
+plt.title('imag_FT')
 define_plot_resolution()
 plt.savefig('myplot_all.png')
 
