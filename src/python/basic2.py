@@ -27,6 +27,7 @@ fs = 1024
 nb_points= fs * Dt
 data = data[0:nb_points]
 
+time, amplitude = data[0] , data[1]
 #Plot the fft
 plt.figure(1)
 plt.plot(time,amplitude)
