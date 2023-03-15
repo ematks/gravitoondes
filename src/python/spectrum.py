@@ -2,6 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import copy
 
+#coucou
 
 def define_plot_resolution():
     """
