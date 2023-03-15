@@ -3,11 +3,10 @@ import matplotlib.pyplot as plt
 
 def basic_plot(file, fs = 1024, time_window=10000):
     """
-    This function allow to define the resolution of a matplotlib plot on a way
-    wich is device independent. Put this before saving any of your plot to get
-    homogeneous resolution.
-    """
+    This function plots the start of a time series data file
 
+    It shows and saves the figure in mybasicplot_timeseries.png
+    """
     #to add: use a data path
     #DATA_PATH = pathlib.Path(__file__).parents[1] / "data"
 
@@ -24,11 +23,11 @@ def basic_plot(file, fs = 1024, time_window=10000):
     plt.xlabel("Time [s]")
     plt.ylabel("Amplitude")
     plt.title('timeserie')
-    plt.savefig('mybasicplot_timeseries.png')
-    fig = plt.gcf() # get current figure
-    
     DPI = fig.get_dpi()
     fig.set_size_inches(1920.0/float(DPI),1080.0/float(DPI))
+
+    plt.savefig('mybasicplot_timeseries.png')
+    fig = plt.gcf() # get current figure
     plt.show()
     return
     
