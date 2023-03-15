@@ -45,3 +45,5 @@ plt.title('timeserie')
 define_plot_resolution()
 plt.savefig('myplot_timeseries.png')
 
+#basic biche pt2
+
