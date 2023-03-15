@@ -29,22 +29,28 @@ duration = 10
 nsamples = fs * duration
 
 #define the time array
-time = np.linspace(0,duration,nsamples)
+#time = np.linspace(0,duration,nsamples)
 
 #define frequency of the signal
 f1 = 200
-sin_ex = np.sin(2*np.pi*f1*time)
-gauss_ex = np.exp(-(time-2)**2/(2*0.1**2))
-data= gauss_ex
+#sin_ex = np.sin(2*np.pi*f1*time)
+#gauss_ex = np.exp(-(time-2)**2/(2*0.1**2))
+
+file = "data/GW150914/h1.data.07.npy"
+data = np.load(file)
+
+time = data[0]
+h = data[1]
 
 
 #Plot the fft
 plt.figure(1)
-plt.plot(time,data)
+plt.plot(time,h)
 plt.xlabel("Time [s]")
 plt.ylabel("Amplitude")
 plt.title('timeserie')
 define_plot_resolution()
+plt.show()
 plt.savefig('myplot_timeseries.png')
 
 # Frequency domain representation
@@ -63,11 +69,11 @@ FT_neg=np.append(FT[0], FT_neg)
 FT_sum = FT_neg - FT_pos
 """
 
-FT=np.fft.rfft(data)
+FT=np.fft.rfft(h)
 
 inv_FT = np.fft.irfft(FT)
 
-tpCount = len(data)
+tpCount = len(h)
 
 values = np.arange(int(tpCount/2)+1)
 
@@ -78,32 +84,34 @@ frequencies = values/timePeriod
 
 #sinus plots
 plt.subplot(411)
-plt.plot(frequencies,abs(FT))
+plt.loglog(frequencies,abs(FT))
 plt.xlabel("Frequency")
 plt.ylabel("Amplitude")
-plt.title('frequency')
+plt.title('FT')
 define_plot_resolution()
 
 plt.subplot(412)
-plt.plot(time,abs(inv_FT))
+plt.plot(time,inv_FT)
 plt.xlabel("Frequency")
 plt.ylabel("Amplitude")
-plt.title('inv_FT')
+plt.title('inv_FT(FT)')
 define_plot_resolution()
 
+
 plt.subplot(413)
-plt.plot(frequencies,abs(np.real(FT))**2)
+plt.loglog(frequencies,abs(np.real(FT))**2)
 plt.xlabel("Frequency")
 plt.ylabel("Amplitude")
-plt.title('real_FT')
+plt.title('real component of FT')
 define_plot_resolution()
 
 plt.subplot(414)
-plt.plot(frequencies,abs(np.imag(FT))**2)
+plt.loglog(frequencies,abs(np.imag(FT))**2)
 plt.xlabel("Frequency")
 plt.ylabel("Amplitude")
-plt.title('imag_FT')
+plt.title('imag component of FT')
 define_plot_resolution()
+
 plt.savefig('myplot_all.png')
 
-
+plt.show()

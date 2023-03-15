@@ -29,40 +29,9 @@ data = np.load("../../data/GW150914/h1.data.00.npy")
 x = data[0]
 y = data[1]
 
-##Compute the FFT
-#define the sampling frequency [Hz]
-fs = 1024
-
-#define the frequency array
-n = x.size
-freq = (fs/2) * np.linspace(0,1,int(n/2))
-
-#compute the fft
-fft = np.fft.fft(y)
-
-#keep the real part of this fft
-fft_to_plot = fft
-
-fft_real = np.real(fft)
-fft_real = abs(fft)
-
-fft_m_real = fft_real[0:int(n/2)]
-
-#Plot the fft
-plt.figure(1)
-plt.plot(freq,np.log10(fft_m_real))
-plt.xlabel("frequency [Hz]")
-plt.ylabel("log spectrum magnitude")
-plt.title('FFT')
-define_plot_resolution()
-plt.savefig('fft.png')
-
-
-
-"""
 ###define the window used for the PSD estimation
 #define the number of point for the window (choose arbitrary value this is just to plot the shape)
-n_window = 
+n_window = 512000
 
 hann_win = np.hanning(n_window)
 
@@ -73,8 +42,54 @@ plt.title('Hann window')
 define_plot_resolution()
 plt.savefig('Hann_window.png')
 
+##Compute the FFT
+#define the sampling frequency [Hz]
+fs = 1024
+
+#define the frequency array
+n = x.size
+freq = np.fft.rfftfreq(len(y), 1/fs)
+
+#compute the fft
+fft_hann = np.fft.rfft(y * hann_win)
+N = len(y)
+#fft_neg = np.fft.fft(y)[N-1, int(N/2)+1]
 
 
+#fft_real = np.real(fft)
+fft_hann_abs = abs(fft_hann)/N
+#fft_neg_abs = abs(fft_neg)/N
+
+#Plot the fft
+plt.figure(1)
+plt.loglog(freq,fft_hann_abs)
+plt.xlabel("frequency [Hz]")
+plt.ylabel("log spectrum magnitude")
+plt.title('FFT')
+define_plot_resolution()
+plt.show()
+plt.savefig('fft.png')
+
+
+
+
+
+
+#Plot the fft
+plt.figure(1)
+#plt.loglog(freq,fft_abs, label = 'fft')
+#plt.loglog(freq,fft_neg_abs, 'g',  label= "neg fft")
+plt.loglog(freq,fft_hann_abs, 'r',  label= "hann-windowed")
+plt.xlabel("frequency [Hz]")
+plt.ylabel("log spectrum magnitude")
+plt.title('Hann windowed FFT')
+plt.legend()
+define_plot_resolution()
+plt.show()
+plt.savefig('fft.png')
+
+
+"""
 ##Compute the PSD (median methode)
 frequency = 
 
@@ -90,7 +105,6 @@ plt.ylabel("amplitude")
 plt.title('PSD')
 define_plot_resolution()
 plt.savefig('PSD.png')
-
 
 
 ##Whitening
