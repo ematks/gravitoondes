@@ -1,5 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
+import scipy
 import copy
 
 #coucou
@@ -94,23 +95,24 @@ plt.show()
 plt.savefig('fft.png')
 
 
-"""
 ##Compute the PSD (median methode)
-frequency = 
+sample_nb = 2*fs
+freq, psd = scipy.signal.welch(h, fs, nperseg=sample_nb)
 
-S_welch = 
 
 #plot the PSD
 plt.figure(5)
-plt.plot(frequency, S_welch)
+plt.plot(freq, psd)
 plt.xscale('log')
 plt.yscale('log')
 plt.xlabel("freq [Hz]")
 plt.ylabel("amplitude")
 plt.title('PSD')
+plt.show()
 define_plot_resolution()
 plt.savefig('PSD.png')
 
+"""
 
 ##Whitening
 
