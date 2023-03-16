@@ -26,7 +26,8 @@ plt.ioff()
 
 
 #load the data (the one in the numpy format)
-data = np.load("../../data/GW150914/h1.data.00.npy")
+file = "../../data/GW150914/h1.data.00.npy"
+data = np.load(file)
 t = data[0] #time vector
 h = data[1] #h: relative variation delta(L)/L
 
@@ -55,14 +56,14 @@ plt.savefig('Hann_window.png')
 #Renormalise and take module/abs of fft
 
 fft = np.fft.rfft(h)
-fft_abs = abs(fft)/N
+fft_abs = abs(fft)/np.sqrt(N)
 
-fft_neg = np.fft.fft(h)[N: int(N/2)-1: -1]
-fft_neg = np.append(np.fft.fft(h)[0], fft_neg)
-fft_neg_abs = abs(fft_neg)/N
+#fft_neg = np.fft.fft(h)[N: int(N/2)-1: -1]
+#fft_neg = np.append(np.fft.fft(h)[0], fft_neg)
+#fft_neg_abs = abs(fft_neg)/N
 
 fft_hann = np.fft.rfft(h_hann)
-fft_hann_abs = abs(fft_hann)/N
+fft_hann_abs = abs(fft_hann)/np.sqrt(N)
 
 
 #Plot the datas
@@ -81,8 +82,8 @@ plt.savefig('data.png')
 #Plot the fft
 plt.figure(1)
 plt.loglog(freq,fft_abs, label = 'fft')
-plt.loglog(freq,fft_neg_abs, 'g',  label= "Negative fft")
-plt.loglog(freq,fft_neg_abs-fft_abs, 'y',  label= "difference between Negative fft and fft")
+#plt.loglog(freq,fft_neg_abs, 'g',  label= "Negative fft")
+#plt.loglog(freq,fft_neg_abs-fft_abs, 'y',  label= "difference between Negative fft and fft")
 plt.loglog(freq,fft_hann_abs, 'r',  label= "hann-windowed fft")
 plt.xlabel("frequency [Hz]")
 plt.ylabel("log spectrum magnitude")
