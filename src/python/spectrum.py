@@ -31,8 +31,8 @@ data = np.load(file)
 t = data[0] #time vector
 h = data[1] #h: relative variation delta(L)/L
 
-N = len(h) #nb of data points
 fs = 1024 #sampling frequency in Hz
+N = len(h) #nb of data points
 #n = t.size #dont know what is that used for
 freq = np.fft.rfftfreq(N, 1/fs)
 
@@ -66,6 +66,8 @@ fft_hann = np.fft.rfft(h_hann)
 fft_hann_abs = abs(fft_hann)/np.sqrt(N)
 
 
+
+
 #Plot the datas
 plt.figure(1)
 plt.plot(t, h, 'b', label='raw data')
@@ -79,7 +81,7 @@ plt.show()
 plt.savefig('data.png')
 
 
-#Plot the fft
+#Plot the ffts
 plt.figure(1)
 plt.loglog(freq,fft_abs, label = 'fft')
 #plt.loglog(freq,fft_neg_abs, 'g',  label= "Negative fft")
