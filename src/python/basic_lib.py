@@ -1,7 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-def basic_plot(file, fs = 1024, time_window=10000):
+def basic_plot(file, fs = 1024, time_window=10):
     """
     This function plots the start of a time series data file
 
@@ -23,14 +23,18 @@ def basic_plot(file, fs = 1024, time_window=10000):
     plt.xlabel("Time [s]")
     plt.ylabel("Amplitude")
     plt.title('timeserie')
-    DPI = fig.get_dpi()
-    fig.set_size_inches(1920.0/float(DPI),1080.0/float(DPI))
 
     plt.savefig('mybasicplot_timeseries.png')
     fig = plt.gcf() # get current figure
+
+    DPI = fig.get_dpi()
+    fig.set_size_inches(1920.0 / float(DPI), 1080.0 / float(DPI))
+
     plt.show()
     return
-    
+
+
+def
 file = "data/GW150914/h1.data.00.npy"
 
 basic_plot(file)

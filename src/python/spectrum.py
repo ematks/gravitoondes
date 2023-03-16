@@ -24,62 +24,66 @@ def define_plot_resolution():
 #Note that plot are still saved with it
 plt.ioff()
 
+
 #load the data (the one in the numpy format)
 data = np.load("../../data/GW150914/h1.data.00.npy")
-x = data[0]
-y = data[1]
+t = data[0] #time vector
+h = data[1] #h: relative variation delta(L)/L
+
+N = len(h) #nb of data points
+fs = 1024 #sampling frequency in Hz
+#n = t.size #dont know what is that used for
+freq = np.fft.rfftfreq(N, 1/fs)
+
 
 ###define the window used for the PSD estimation
 #define the number of point for the window (choose arbitrary value this is just to plot the shape)
 n_window = 512000
-
 hann_win = np.hanning(n_window)
-
+h_hann = h * hann_win
+"""
 #plot to check that the window looks good
 plt.figure(3)
 plt.plot(hann_win)
 plt.title('Hann window')
 define_plot_resolution()
 plt.savefig('Hann_window.png')
+"""
 
-##Compute the FFT
-#define the sampling frequency [Hz]
-fs = 1024
-
-#define the frequency array
-n = x.size
-freq = np.fft.rfftfreq(len(y), 1/fs)
 
 #compute the fft
-fft_hann = np.fft.rfft(y * hann_win)
-N = len(y)
-#fft_neg = np.fft.fft(y)[N-1, int(N/2)+1]
+#Renormalise and take module/abs of fft
 
+fft = np.fft.rfft(h)
+fft_abs = abs(fft)/N
 
-#fft_real = np.real(fft)
+fft_neg = np.fft.fft(h)[N: int(N/2)-1: -1]
+fft_neg = np.append(np.fft.fft(h)[0], fft_neg)
+fft_neg_abs = abs(fft_neg)/N
+
+fft_hann = np.fft.rfft(h_hann)
 fft_hann_abs = abs(fft_hann)/N
-#fft_neg_abs = abs(fft_neg)/N
 
-#Plot the fft
+
+#Plot the datas
 plt.figure(1)
-plt.loglog(freq,fft_hann_abs)
-plt.xlabel("frequency [Hz]")
-plt.ylabel("log spectrum magnitude")
-plt.title('FFT')
+plt.plot(t, h, 'b', label='raw data')
+plt.plot(t, h_hann, 'g', label='hann_windowed data')
+plt.xlabel("Time [s]")
+plt.ylabel("Magnitude of relative compression h")
+plt.title('Data')
 define_plot_resolution()
+plt.legend(loc='best')
 plt.show()
-plt.savefig('fft.png')
-
-
-
-
+plt.savefig('data.png')
 
 
 #Plot the fft
 plt.figure(1)
-#plt.loglog(freq,fft_abs, label = 'fft')
-#plt.loglog(freq,fft_neg_abs, 'g',  label= "neg fft")
-plt.loglog(freq,fft_hann_abs, 'r',  label= "hann-windowed")
+plt.loglog(freq,fft_abs, label = 'fft')
+plt.loglog(freq,fft_neg_abs, 'g',  label= "Negative fft")
+plt.loglog(freq,fft_neg_abs-fft_abs, 'y',  label= "difference between Negative fft and fft")
+plt.loglog(freq,fft_hann_abs, 'r',  label= "hann-windowed fft")
 plt.xlabel("frequency [Hz]")
 plt.ylabel("log spectrum magnitude")
 plt.title('Hann windowed FFT')
