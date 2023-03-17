@@ -15,9 +15,9 @@ npy_files_h = []
 npy_files_l = []
 for file in files:
     if file.endswith('.npy') and file.startswith('h1'):
-        npy_files_h.append(file)
+        npy_files_h.append(path+file)
     elif file.endswith('.npy') and file.startswith('l1'):
-        npy_files_l.append(file)
+        npy_files_l.append(path+file)
 
 
 #this should be a function, will be soon hopefully
@@ -40,7 +40,7 @@ def make_global_psd(files, fs= 1024):
     psd_sum=[0 for i in range(fs+1)] #initiate an array in which sum the files psds
 
     for file in files:
-        data = np.load(path+file)
+        data = np.load(file)
         global_freq, psd = lib_GW.make_psd(data[1], fs)
         psd_sum += psd
 
