@@ -2,13 +2,20 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 
-def nextPowerOf2(n): 
+def nextPowerOf2(n: int):
     """
     This function returns the closest power of 2 bigger than n
-    """
 
-    power = 
-      
+    If the entered int is negative, returns 0 to show miscontent
+    """
+    if n<0:
+        print("The entered integer is negative. Cannot compute next opxer of 2")
+        return 0
+    power = 0
+    while n != 0:
+        power += 1
+        n = n // 2
+
     return power
 
 
