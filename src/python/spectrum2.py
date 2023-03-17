@@ -97,10 +97,7 @@ def psd(file, fs=1024):
 
     return freq, psd
 
-def psd2(data, fs=1024, T=2):
-
-    h = data #h: relative variation delta(L)/L
-    N = len(h) #nb of data points
+def psd2(h, fs=1024, T=2):
 
     ##Compute the PSD (median methode)
     sample_nb = T * fs
