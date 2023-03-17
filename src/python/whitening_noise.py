@@ -2,9 +2,9 @@ import numpy as np
 import matplotlib.pyplot as plt
 import scipy
 
-import spectrum2
+import lib_GW
 import PSD_generator
-from spectrum2 import psd
+from lib_GW import psd
 
 def define_plot_resolution():
     """

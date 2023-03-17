@@ -1,4 +1,4 @@
-import spectrum2
+import lib_GW
 import os
 import numpy as np
 
