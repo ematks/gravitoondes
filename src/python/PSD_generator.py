@@ -22,15 +22,30 @@ for file in files:
 
 #this should be a function, will be soon hopefully
 def make_global_psd(files, fs= 1024):
+    """
+    Parameters
+    ----------
+    file: (list)
+        list of strings that should refer to the path of files fromw which the global psd will eb computed from
+    fs: (int)
+         sampling frequency of files data, default = 1024
+
+    Returns
+    -------
+    global_freq: (ndarray)
+        frequencies realted to the psds
+    global_psd: (ndarray)
+        mean psd computed from list of files
+    """
     psd_sum=[0 for i in range(fs+1)] #initiate an array in which sum the files psds
 
     for file in files:
         data = np.load(path+file)
-        global_freq, psd = spectrum2.psd2(data[1], fs)
+        global_freq, psd = lib_GW.make_psd(data[1], fs)
         psd_sum += psd
 
-    global_PSD = psd_sum/len(files))
-    return global_PSD
+    global_psd = psd_sum/len(files)
+    return global_freq, global_psd
 
-global_psd_h = make_global_psd(npy_files_h)
-global_psd_l = make_global_psd(npy_files_l)
+global_freq, global_psd_h = make_global_psd(npy_files_h)
+o, global_psd_l = make_global_psd(npy_files_l)
