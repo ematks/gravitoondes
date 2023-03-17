@@ -103,8 +103,8 @@ plt.savefig('fft.png')
 
 ##Compute the PSD (median methode)
 sample_nb = 2*fs
-freq_h, psd_h = scipy.signal.welch(h, fs, nperseg=sample_nb)
-freq_l, psd_l = scipy.signal.welch(l, fs, nperseg=sample_nb)
+freq_h, psd_h = scipy.signal.welch(h, fs, nperseg=sample_nb, average = 'median')
+freq_l, psd_l = scipy.signal.welch(l, fs, nperseg=sample_nb, average = 'median')
 
 #plot the PSD
 plt.figure(3)

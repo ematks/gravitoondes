@@ -77,7 +77,7 @@ tpCount = len(h)
 
 values = np.arange(int(tpCount/2)+1)
 
-timePeriod  = tpCount/fs
+timePeriod = tpCount/fs
 
 frequencies = values/timePeriod
 

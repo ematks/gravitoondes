@@ -1,7 +1,10 @@
+import sys
+
 import numpy as np
 import matplotlib.pyplot as plt
 import scipy
-import copy
+
+import sys
 
 #coucou
 
@@ -78,28 +81,56 @@ def plot_psd(file, fs=1024):
     sample_nb = 2 * fs
     freq, psd = scipy.signal.welch(h, fs, nperseg=sample_nb)
 
-    plt.plot(freq, psd)
+    plt.plot(freq, np.sqrt(psd))
 
+def psd(file, fs=1024):
 
-files = ["../../data/GW150914/h1.data.00.npy", "../../data/GW150914/h1.data.01.npy"]
+    #load the data (the one in the numpy format)
+    data = np.load(file)
+    t = data[0] #time vector
+    h = data[1] #h: relative variation delta(L)/L
+    N = len(h) #nb of data points
 
-#plotting some FFTs
-plot_setup_fft()
-for file in files:
-    plot_fft(file)
-plt.show()
-plt.savefig('fft.png')
-plt.close()
+    ##Compute the PSD (median methode)
+    sample_nb = 2 * fs
+    freq, psd = scipy.signal.welch(h, fs, nperseg=sample_nb)
 
-#plotting some PSDs
-plot_setup_psd()
-for file in files:
-    plot_psd(file)
-plt.show()
-plt.show()
+    return freq, psd
 
-plt.savefig('PSD.png')
+def psd2(data, fs=1024, T=2):
 
+    h = data #h: relative variation delta(L)/L
+    N = len(h) #nb of data points
+
+    ##Compute the PSD (median methode)
+    sample_nb = T * fs
+    freq, psd = scipy.signal.welch(h, fs, nperseg=sample_nb, average='median')
+
+    return freq, psd
+
+def normalize(x):
+    return(x/np.linalg.norm(x))
+
+def main():
+    files = ["../../data/GW150914/h1.data.00.npy"]
+
+    #plotting some FFTs
+    plot_setup_fft()
+    for file in files:
+        plot_fft(file)
+    plt.show()
+    plt.savefig('fft.png')
+    plt.close()
+
+    #plotting some PSDs
+    plot_setup_psd()
+    for file in files:
+        plot_psd(file)
+    plt.show()
+    plt.savefig('PSD.png')
+
+if __name__ == "__main__":
+    sys.exit(main())
 
 
 #plot the PSD
