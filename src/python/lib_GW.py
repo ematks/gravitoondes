@@ -1,12 +1,11 @@
-import sys
+"""
+Ce fichier constitue une librairie de différentes fonctions utilisées dans les codes du projet GW
+"""
 
 import numpy as np
 import matplotlib.pyplot as plt
 import scipy
-
 import sys
-
-#coucou
 
 def define_plot_resolution():
     """
