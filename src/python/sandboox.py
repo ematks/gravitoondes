@@ -1,18 +1,6 @@
-def nextPowerOf2(n: int):
-    """
-    This function returns the closest power of 2 bigger than n
+import numpy as np
 
-    If the entered int is negative, returns 0 to show miscontent
-    """
-    if n<0:
-        print("The entered integer is negative. Cannot compute next opxer of 2")
-        return 0
-    power = 0
-    while n != 0:
-        power += 1
-        n = n // 2
 
-    return power
+print(2*np.pi*364/8.25 * 4/(2*np.sqrt(0.2/3)))
 
-x = -0.5
-print(nextPowerOf2(x), 2**(nextPowerOf2(x)-1),2**nextPowerOf2(x))
+print(46*4096/2)
