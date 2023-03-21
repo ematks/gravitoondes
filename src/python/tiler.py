@@ -194,6 +194,24 @@ class spectrogram:
         plt.savefig('tile dummies values.png')
         return
 
+    def window(self):
+        w = []
+        for l in range(len(self.freq)):
+            w_l= []
+            M_l = int(2* self.freq[l]*np.sqrt(11)/self.Q * self.time_range)
+
+            for k in range(0, (M_l+1)/2 ):
+                w_l = np.append(w_l, (1-(2*k/(M_l-1))**2)**2)
+            for k in range((M_l+1)/2, M_l):
+                w_l = np.append(w_l, (1-(2*(k-M_l)/(M_l-1))**2)**2)
+            W_b = np.linalg.norm(w_l)
+            w = np.append(w, W_b*w_l)
+        self.W = w
+        return
+
+
+
+
 
 def main():
     ############ MAIN ################
