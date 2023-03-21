@@ -2,6 +2,9 @@ import numpy as np
 import matplotlib.pyplot as plt
 from math import *
 import sys
+import qtransformer
+import whitening_noise
+import PSD_generator
 
 def nextPowerOf2(n: int):
     """
@@ -127,7 +130,8 @@ class spectrogram:
         self.freq_bin_numb()  # defines self.N_phi
         self.freqtiles_center_array()  # defines self.freq
         self.time_bin_numb()  # defines self.N_t
-
+        self.W = [[]]
+        self.V = [[]]
 
         """
         To be filled
@@ -173,9 +177,9 @@ class spectrogram:
         This function fill the Q plan matrix with the values in each row
         """
         # To be done
-        for i in range(tile_values):
+        for i in range(len(tile_values)):
             for j in range(len(tile_values[i])):
-                self.tile_fill([i,j], values[i,j])
+                self.tile_fill([i,j], tile_values[i][j])
         return
 
     def plot_matrix(self):
@@ -200,15 +204,57 @@ class spectrogram:
             w_l= []
             M_l = int(2* self.freq[l]*np.sqrt(11)/self.Q * self.time_range)
 
-            for k in range(0, (M_l+1)/2 ):
+            for k in range(0, int((M_l+1)/2) ):
                 w_l = np.append(w_l, (1-(2*k/(M_l-1))**2)**2)
-            for k in range((M_l+1)/2, M_l):
+            for k in range(int((M_l+1)/2), M_l):
                 w_l = np.append(w_l, (1-(2*(k-M_l)/(M_l-1))**2)**2)
             W_b = np.linalg.norm(w_l)
-            w = np.append(w, W_b*w_l)
+            w += [W_b*w_l]
         self.W = w
         return
 
+    def V_coeff(self, x_fft):
+        """
+        Function that calculates V
+
+        Parameters
+        ----------
+        m__time_coord: (int)
+            tile coordinate in the tile time axis
+        l__phi_coord: (int)
+            tile coordinate in the frequency axis
+        x_fft: (array)
+            whitened fourier transformed data
+        spectro: (spectrogram)
+            the spectrogram we are evaluating the q-transform coefficient in
+
+        Returns
+        -------
+        V: (list)
+            list of v coefficent for all frequencies row
+        """
+
+        N = len(x_fft)
+
+        V = []
+        for l__phi_coord in range(len(self.freq)):
+            w_l = self.W[l__phi_coord]
+            M_l = len(w_l) #length of (non null coeffcicents of) w_l
+            N_tau = self.N_t[l__phi_coord]
+            p_l = int(self.freq[l__phi_coord] * N / self.fs)  # N/fs = T
+            v_l = []
+            for k in range(N_tau):
+                if k < (M_l + 1) / 2:
+                    v_l_k = x_fft[(k + p_l)%N] * w_l[k%M_l] * np.exp(2 * 1j * np.pi * k / N_tau)
+                elif (M_l + 1) / 2 <= k < N_tau - (M_l - 1) / 2:
+                    v_l_k = 0
+                elif N_tau - (M_l - 1) / 2 <= k:
+                    v_l_k = -x_fft[(k + N - N_tau + p_l)%N] * w_l[(k + N - N_tau)%M_l] * np.exp(2 * 1j * np.pi * k / N_tau)
+
+                v_l = np.append(v_l, N_tau / N * v_l_k)
+            V += [v_l]
+        self.V = V
+        return
 
 
 
@@ -224,9 +270,27 @@ def main():
 
     spectro = spectrogram(Q, mu_max, time_range)
 
-    spectro.fill_row_for_demo()
+    #on recupère des données
+    files = PSD_generator.npy_files_h
+    for file in files:
+        data = np.load(file)
+        print(file, data[0][0])
+
+    data = np.load('../../data/GW150914/h1.data.05.npy')
+    h = data[1][1024 * 2 * 136:]  # h: relative variation delta(L)/L
+    print(data[0][1024 * 2 * 136])
+    x = whitening_noise.whitenning_noise(h, spectro.fs, spectro.time_range)
+    x_fft = np.fft.fft(x)
+    #on calcule le coeffe d q transofrm
+    spectro.window()
+    spectro.V_coeff(x_fft)
+    q_transform_coeff = [np.fft.ifft(spectro.V[l]) for l in range(len(spectro.V))]
+    q_transform_coeff_abs = [[np.abs(q_transform_coeff[i][j]) for j in range(len(q_transform_coeff[i]))] for i in range(len(q_transform_coeff))]
+    spectro.fill_matrix(q_transform_coeff_abs)
+
+    #spectro.fill_row_for_demo()
 #    spectro.tile_fill([42,1000],2.0)
-    #spectro.fill_matrix()
+
 
     spectro.plot_matrix()
     plt.show()
