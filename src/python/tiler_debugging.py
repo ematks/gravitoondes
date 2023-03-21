@@ -203,10 +203,9 @@ class spectrogram:
         for l in range(len(self.freq)):
             w_l= []
             M_l = 2*int(self.freq[l]*np.sqrt(11)/self.Q * self.time_range)+1
-
-            for k in range(0, (M_l+1)/2):
+            for k in range(0, int((M_l+1)/2)):
                 w_l = np.append(w_l, (1-(2*k/(M_l-1))**2)**2)
-            for k in range((M_l+1)/2, M_l):
+            for k in range(int((M_l+1)/2), M_l):
                 w_l = np.append(w_l, (1-(2*(k-M_l)/(M_l-1))**2)**2)
             W_b = np.sqrt(315/(128*np.sqrt(11))*self.Q/self.freq[l])
             w += [W_b*w_l]
@@ -280,19 +279,27 @@ def main():
     h = data[1][1024 * 2 * 136:]  # h: relative variation delta(L)/L
     print(data[0][1024 * 2 * 136])
     x = whitening_noise.whitenning_noise(h, spectro.fs, spectro.time_range)
+
+    plt.figure(1)
+    plt.plot(data[0][1024 * 2 * 136: 1024 * 2 * 136 + 4 * spectro.fs], x[:4 * spectro.fs], label='whitened data', alpha=0.8)
+    plt.legend(loc='best')
+    plt.title('Samples check')
+    plt.show()
+
     x_fft = np.fft.fft(x)
     #on calcule le coeffe d q transofrm
     spectro.window()
     spectro.V_coeff(x_fft)
     q_transform_coeff = [np.fft.ifft(spectro.V[l]) for l in range(len(spectro.V))]
     q_transform_coeff_abs = []
-    for l in range(len(q_transform_coeff):
+    for l in range(len(q_transform_coeff)):
         for m in range(len(q_transform_coeff[l])):
             q_transform_coeff_abs_m = []
-            if np.abs(q_transform_coeff[l][m]**2 > 2:
-                q_transform_coeff_abs_m += np.sqrt(np.abs(q_transform_coeff[l][m])**2-2)
+            if np.abs(q_transform_coeff[l][m])**2 >= 0.0:
+                q_transform_coeff_abs_m = np.append( q_transform_coeff_abs_m, np.sqrt(np.abs(q_transform_coeff[l][m])**2-0.0))
             else:
-                q_transform_coeff_abs = 0
+                q_transform_coeff_abs_m = np.append( q_transform_coeff_abs_m, 0.0)
+        q_transform_coeff_abs += [q_transform_coeff_abs_m]
     spectro.fill_matrix(q_transform_coeff_abs)
 
     #spectro.fill_row_for_demo()
