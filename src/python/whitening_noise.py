@@ -6,54 +6,29 @@ import sys
 
 import PSD_generator
 
-#Global PSD of the detector
-global_freq_psd, global_psd = PSD_generator.global_freq,  PSD_generator.global_psd_h #attention cette PSD globale concerne le deceteur de Hanford
+#Global PSD of the detector (Hanford)
+global_freq_psd, global_psd = PSD_generator.global_freq,  PSD_generator.global_psd_h
 
 #Unfold global PSD of the detector
-global_psd_unfold, global_freq_unfold = np.append(global_psd[:], np.flip(global_psd[1:])), np.append(global_freq_psd[:], -np.flip(global_freq_psd[1:]))
+global_psd_unfold = np.append(global_psd[:], np.flip(global_psd[1:]))
+global_freq_unfold = np.append(global_freq_psd[:], -np.flip(global_freq_psd[1:]))
 
-"""
-def sampling(data, fs=1024, T=4 ):
 
-        Function which allows to make T-sized segment of the data with a Tukey window to prevent spectral leakage,
-        and return the Fourier transform of the segment
-
-        Parameters
-        ----------
-        data : 1d array
-               signal data
-        fs : int
-             sampling frequency
-             default value = 1024
-        T : int
-             data segments size
-             default value = 4s
-
-        Return
-        ----------
-    
-    # number of points in the sample
-    sample_nb = T * fs
-    # nbs_sample = int(len(h)/sample_nb)
-
-    # Extract a sample of T s and apply a Tukey window
-    tukey = scipy.signal.windows.tukey(sample_nb)
-    sample = h[:sample_nb] * tukey
-
-    return (np.fft.fft(sample),np.fft.fftfreq(sample_nb, 1 / fs))
-"""
-
-def whitenning_noise(h, fs=1024,T=4, return_whitened_psd=False, fft_psd_plot=False):
+def whitening_noise(h, fs=1024, T=4, return_whitened_psd=False, fft_psd_plot=False):
     """
     Function which returns a whitened signal
     Parameters
     ----------
-    data : 1d array
+    h : (1d array)
            signal data
+
+    T: (int)
+        period used to define welch method's sampling bits, expressed in seconds
 
     Return
     ----------
     Whitened signal
+    :type fs: object
     """
     sample_nb = T * fs
     # nbs_sample = int(len(h)/sample_nb)
@@ -62,7 +37,7 @@ def whitenning_noise(h, fs=1024,T=4, return_whitened_psd=False, fft_psd_plot=Fal
     tukey = scipy.signal.windows.tukey(sample_nb)
     sample = h[:sample_nb] * tukey
 
-    fft_sample, freq_sample = np.fft.fft(sample),np.fft.fftfreq(sample_nb, 1 / fs)
+    fft_sample, freq_sample = np.fft.fft(sample), np.fft.fftfreq(sample_nb, 1 / fs)
 
     #Alignment : interpolate to have the right number of points in PSD
     psd_unfold_interpolator = scipy.interpolate.interp1d(global_freq_unfold, global_psd_unfold)
@@ -80,22 +55,22 @@ def whitenning_noise(h, fs=1024,T=4, return_whitened_psd=False, fft_psd_plot=Fal
         plt.figure(2)
         plt.yscale('log')
         plt.plot(freq_sample, lib_GW.normalize(abs(fft_sample)), label='normalised fft sample')
-        # plt.plot(freq_unfold,psd_unfold)
+        #plt.plot(freq_unfold,psd_unfold)
         plt.plot(freq_sample, lib_GW.normalize(np.sqrt(psd_unfold_interpolated / 2)), label='normalised global psd')
         plt.plot(freq_sample, lib_GW.normalize(abs(fft_sample_whitened)), label='normalised whitened fft sample')
         plt.legend(loc='best')
         plt.title('FFTs, PSD check')
         plt.show()
 
-
     """ 
     #PSD of the non-whitened sample
     freq_psd_sample, psd_sample = lib_GW.make_psd(sample)
     """
-    if return_whitened_psd: #PSD of the whitened sample (ignoring the first and last second due to the Tukey window)
+    if return_whitened_psd:  # PSD of the whitened sample (ignoring the first and last second due to the Tukey window)
         return lib_GW.make_psd(np.real(sample_whitened[fs:3*fs]))
     else:
         return sample_whitened
+
 
 def main():
     # load the data (the one in the numpy format)
@@ -106,8 +81,8 @@ def main():
     t = data[0]  # time vector
     h = data[1]  # h: relative variation delta(L)/L
 
-    sample_whitened = whitenning_noise(h, fs=1024, T=4)
-    freq_psd_whitened_sample, psd_whitened_sample = whitenning_noise(h, fs=1024, T=4, return_whitened_psd=True)
+    sample_whitened = whitening_noise(h, fs=1024, T=4)
+    freq_psd_whitened_sample, psd_whitened_sample = whitening_noise(h, fs=1024, T=4, return_whitened_psd=True)
 
     T = 4
     fs = 1024
@@ -121,7 +96,6 @@ def main():
     plt.legend(loc='best')
     plt.title('Samples check')
     plt.show()
-
 
     # Plotting the psd of whitened sample to check it
     plt.figure(3)
@@ -139,6 +113,7 @@ def main():
     plt.show()
 
     plt.savefig('PSD.png')
+
 
 if __name__ == "__main__":
     sys.exit(main())
